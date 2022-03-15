@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This script expects the following parameter:
-# 	the path to a (MODIFIED) colmap version for wich a set of patches should be computed 
+# 	the path to a (MODIFIED) colmap source directory for wich a set of patches should be computed 
 
 if [ $# -lt 1 ] || [ $# -gt 1 ]; then
     echo "Script expects 1 parameter, but ${#} provided!" >&2
