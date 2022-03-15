@@ -11,8 +11,8 @@ fi
 
 export ORIGINAL_DP=$PWD
 
-export PATH_TO_MODIFIED_COLMAP_SOURCE=$1
-echo "Reading colmap from: $PATH_TO_MODIFIED_COLMAP_SOURCE"
+export MODIFIED_COLMAP_SOURCE_DP=$1
+echo "Reading colmap from: $MODIFIED_COLMAP_SOURCE_DP"
 
 # Go to the directory where the script is located
 cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd
@@ -21,7 +21,7 @@ export PATCH_DP="${SH_FILE_DP}/patches"
 
 echo "Creating patch files in: $PATCH_DP"
 
-cd $PATH_TO_MODIFIED_COLMAP_SOURCE
+cd $MODIFIED_COLMAP_SOURCE_DP
 
 # Since the following files are not part of colmap, we copy these files (instead of using git diff).
 #  - install_without_sudo.sh
