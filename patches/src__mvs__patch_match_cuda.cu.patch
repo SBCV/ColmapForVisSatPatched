@@ -1,5 +1,5 @@
 diff --git a/src/mvs/patch_match_cuda.cu b/src/mvs/patch_match_cuda.cu
-index 77d7c73..5469cac 100755
+index 77d7c73..c415587 100755
 --- a/src/mvs/patch_match_cuda.cu
 +++ b/src/mvs/patch_match_cuda.cu
 @@ -1,3 +1,35 @@
@@ -818,10 +818,11 @@ index 77d7c73..5469cac 100755
      std::vector<float> src_depth_maps_host_data(
          static_cast<size_t>(max_width * max_height *
                              problem_.src_image_idxs.size()),
-@@ -1528,106 +1697,85 @@ void PatchMatchCuda::InitTransforms() {
+@@ -1527,107 +1696,85 @@ void PatchMatchCuda::InitTransforms() {
+   // Generate rotated versions (counter-clockwise) of calibration matrix.
    //////////////////////////////////////////////////////////////////////////////
  
-   for (size_t i = 0; i < 4; ++i) {
+-  for (size_t i = 0; i < 4; ++i) {
 -    ref_K_host_[i][0] = ref_image.GetK()[0];
 -    ref_K_host_[i][1] = ref_image.GetK()[2];
 -    ref_K_host_[i][2] = ref_image.GetK()[4];
@@ -877,12 +878,12 @@ index 77d7c73..5469cac 100755
 +  CUDA_SAFE_CALL(cudaMemcpyToSymbol(ref_K, ref_K_host_[0], sizeof(float) * 6, 0, cudaMemcpyHostToDevice));
 +  CUDA_SAFE_CALL(cudaMemcpyToSymbol(ref_inv_K, ref_inv_K_host_[0], sizeof(float) * 6, 0, cudaMemcpyHostToDevice));
 +  CUDA_SAFE_CALL(cudaMemcpyToSymbol(ref_R, ref_R_host_[0], sizeof(float) * 9, 0,
++                                    cudaMemcpyHostToDevice));
++  CUDA_SAFE_CALL(cudaMemcpyToSymbol(ref_T, ref_T_host_[0],
++                                    sizeof(float) * 3, 0,
                                      cudaMemcpyHostToDevice));
 -  CUDA_SAFE_CALL(cudaMemcpyToSymbol(ref_inv_K, ref_inv_K_host_[0],
 -                                    sizeof(float) * 4, 0,
-+  CUDA_SAFE_CALL(cudaMemcpyToSymbol(ref_T, ref_T_host_[0],
-+                                    sizeof(float) * 3, 0,
-+                                    cudaMemcpyHostToDevice));
 +  CUDA_SAFE_CALL(cudaMemcpyToSymbol(ref_P, ref_P_host_[0],
 +                                    sizeof(float) * 16, 0,
 +                                    cudaMemcpyHostToDevice));
@@ -972,7 +973,7 @@ index 77d7c73..5469cac 100755
 +    offset += 3;
    }
  
-+ poses_device_.reset(new CudaArrayWrapper<float>(
++  poses_device_.reset(new CudaArrayWrapper<float>(
 +      kNumTformParams, problem_.src_image_idxs.size(), 1));
 +  poses_device_->CopyToDevice(poses_host_data);
 +
@@ -987,7 +988,7 @@ index 77d7c73..5469cac 100755
  }
  
  void PatchMatchCuda::InitWorkspaceMemory() {
-@@ -1710,8 +1858,6 @@ void PatchMatchCuda::Rotate() {
+@@ -1710,8 +1857,6 @@ void PatchMatchCuda::Rotate() {
  
    // Rotate normal map.
    {
@@ -996,7 +997,7 @@ index 77d7c73..5469cac 100755
      std::unique_ptr<GpuMat<float>> rotated_normal_map(
          new GpuMat<float>(width, height, 3));
      normal_map_->Rotate(rotated_normal_map.get());
-@@ -1751,18 +1897,31 @@ void PatchMatchCuda::Rotate() {
+@@ -1751,18 +1896,31 @@ void PatchMatchCuda::Rotate() {
      cost_map_.swap(rotated_cost_map);
    }
  
