@@ -43,6 +43,8 @@ git diff src/base/reconstruction.cc > "${PATCH_DP}/src__base__reconstruction.cc.
 git diff src/base/reconstruction.h > "${PATCH_DP}/src__base__reconstruction.h.patch"
 
 git diff src/controllers/bundle_adjustment.cc > "${PATCH_DP}/src__controllers__bundle_adjustment.cc.patch"
+# Normalization has been moved from src/controllers/bundle_adjustment.cc to src/ui/bundle_adjustment_widget.cc
+git diff src/ui/bundle_adjustment_widget.cc > "${PATCH_DP}/src__ui__bundle_adjustment_widget.cc.patch"
 
 # src/base/colmap.cc has been reorganized into src/base/colmap.cc, src/base/sfm.cc, ...
 git diff src/exe/colmap.cc > "${PATCH_DP}/src__exe__colmap.cc.patch"
