@@ -1,5 +1,5 @@
 diff --git a/src/mvs/patch_match_cuda.cu b/src/mvs/patch_match_cuda.cu
-index 77d7c73..0f1a281 100755
+index 77d7c73..5469cac 100755
 --- a/src/mvs/patch_match_cuda.cu
 +++ b/src/mvs/patch_match_cuda.cu
 @@ -1,3 +1,35 @@
@@ -198,7 +198,7 @@ index 77d7c73..0f1a281 100755
  __device__ inline void GenerateRandomNormal(const int row, const int col,
                                              curandState* rand_state,
                                              float normal[3]) {
-@@ -113,72 +251,134 @@ __device__ inline void GenerateRandomNormal(const int row, const int col,
+@@ -113,72 +251,135 @@ __device__ inline void GenerateRandomNormal(const int row, const int col,
    normal[1] = 2.0f * v2 * s_norm;
    normal[2] = 1.0f - 2.0f * s;
  
@@ -272,16 +272,6 @@ index 77d7c73..0f1a281 100755
 -  const float cos_a3 = cos(a3);
 -
 -  // R = Rx * Ry * Rz
--  float R[9];
--  R[0] = cos_a2 * cos_a3;
--  R[1] = -cos_a2 * sin_a3;
--  R[2] = sin_a2;
--  R[3] = cos_a1 * sin_a3 + cos_a3 * sin_a1 * sin_a2;
--  R[4] = cos_a1 * cos_a3 - sin_a1 * sin_a2 * sin_a3;
--  R[5] = -cos_a2 * sin_a1;
--  R[6] = sin_a1 * sin_a3 - cos_a1 * cos_a3 * sin_a2;
--  R[7] = cos_a3 * sin_a1 + cos_a1 * sin_a2 * sin_a3;
--  R[8] = cos_a1 * cos_a2;
 +
 +  // uniformly sample from a cone that centers around the normal vector
 +
@@ -321,6 +311,16 @@ index 77d7c73..0f1a281 100755
 +  // the rotation from (vec, normal, rot_axis) to the original one is (vec, normal, rot_axis)
 +  // essentially by multiply (cos alpha, -sin alpha, 0; sin alpha, cos alpha, 0; 0, 0, 1) and
 +  //      (vec, normal, rot_axis)^T
+   float R[9];
+-  R[0] = cos_a2 * cos_a3;
+-  R[1] = -cos_a2 * sin_a3;
+-  R[2] = sin_a2;
+-  R[3] = cos_a1 * sin_a3 + cos_a3 * sin_a1 * sin_a2;
+-  R[4] = cos_a1 * cos_a3 - sin_a1 * sin_a2 * sin_a3;
+-  R[5] = -cos_a2 * sin_a1;
+-  R[6] = sin_a1 * sin_a3 - cos_a1 * cos_a3 * sin_a2;
+-  R[7] = cos_a3 * sin_a1 + cos_a1 * sin_a2 * sin_a3;
+-  R[8] = cos_a1 * cos_a2;
 +  const float cos_alpha = cos(alpha);
 +  const float sin_alpha = sin(alpha);
 +  R[0] = cos_alpha * vec[0] - sin_alpha * normal[0];
@@ -369,7 +369,7 @@ index 77d7c73..0f1a281 100755
      }
    }
  
-@@ -189,46 +389,49 @@ __device__ inline void PerturbNormal(const int row, const int col,
+@@ -189,46 +390,49 @@ __device__ inline void PerturbNormal(const int row, const int col,
    perturbed_normal[2] *= inv_norm;
  }
  
@@ -448,7 +448,7 @@ index 77d7c73..0f1a281 100755
  __device__ inline void ComputeViewingAngles(const float point[3],
                                              const float normal[3],
                                              const int image_idx,
-@@ -238,80 +441,69 @@ __device__ inline void ComputeViewingAngles(const float point[3],
+@@ -238,80 +442,69 @@ __device__ inline void ComputeViewingAngles(const float point[3],
    *cos_incident_angle = 0.0f;
  
    // Projection center of source image.
@@ -573,7 +573,7 @@ index 77d7c73..0f1a281 100755
  }
  
  // Each thread in the current warp / thread block reads in 3 columns of the
-@@ -419,7 +611,7 @@ struct PhotoConsistencyCostComputer {
+@@ -419,7 +612,7 @@ struct PhotoConsistencyCostComputer {
    int col = -1;
  
    // Depth and normal for which to warp patch.
@@ -582,7 +582,7 @@ index 77d7c73..0f1a281 100755
    const float* normal = nullptr;
  
    __device__ inline void Read(const int row) {
-@@ -464,7 +656,7 @@ struct PhotoConsistencyCostComputer {
+@@ -464,7 +657,7 @@ struct PhotoConsistencyCostComputer {
      for (int row = -kWindowRadius; row <= kWindowRadius; row += kWindowStep) {
        for (int col = -kWindowRadius; col <= kWindowRadius; col += kWindowStep) {
          const float inv_z = 1.0f / z;
@@ -591,7 +591,7 @@ index 77d7c73..0f1a281 100755
          const float norm_row_src = inv_z * row_src + 0.5f;
          const float ref_color = local_ref_image.data[ref_image_idx];
          const float src_color = tex2DLayered(src_images_texture, norm_col_src,
-@@ -531,19 +723,20 @@ struct PhotoConsistencyCostComputer {
+@@ -531,19 +724,20 @@ struct PhotoConsistencyCostComputer {
    const BilateralWeightComputer bilateral_weight_computer_;
  };
  
@@ -618,7 +618,7 @@ index 77d7c73..0f1a281 100755
    }
  
    // Project point in reference image to world.
-@@ -551,48 +744,32 @@ __device__ inline float ComputeGeomConsistencyCost(const float row,
+@@ -551,48 +745,32 @@ __device__ inline float ComputeGeomConsistencyCost(const float row,
    ComputePointAtDepth(row, col, depth, forward_point);
  
    // Project world point to source image.
@@ -680,7 +680,7 @@ index 77d7c73..0f1a281 100755
    return min(max_cost, sqrt(diff_col * diff_col + diff_row * diff_row));
  }
  
-@@ -695,16 +872,16 @@ class LikelihoodComputer {
+@@ -695,16 +873,16 @@ class LikelihoodComputer {
      // Warp corners of patch in reference image to source image.
      float src1[2];
      const float ref1[2] = {col - kWindowRadius, row - kWindowRadius};
@@ -701,7 +701,7 @@ index 77d7c73..0f1a281 100755
  
      // Compute area of patches in reference and source image.
      const float ref_area = kWindowSize * kWindowSize;
-@@ -761,7 +938,6 @@ class LikelihoodComputer {
+@@ -761,7 +939,6 @@ class LikelihoodComputer {
    float ncc_norm_factor_;
  };
  
@@ -709,7 +709,7 @@ index 77d7c73..0f1a281 100755
  __global__ void InitNormalMap(GpuMat<float> normal_map,
                                GpuMat<curandState> rand_state_map) {
    const int row = blockDim.y * blockIdx.y + threadIdx.y;
-@@ -775,21 +951,6 @@ __global__ void InitNormalMap(GpuMat<float> normal_map,
+@@ -775,21 +952,6 @@ __global__ void InitNormalMap(GpuMat<float> normal_map,
    }
  }
  
@@ -731,7 +731,7 @@ index 77d7c73..0f1a281 100755
  template <int kWindowSize, int kWindowStep>
  __global__ void ComputeInitialCost(GpuMat<float> cost_map,
                                     const GpuMat<float> depth_map,
-@@ -913,7 +1074,7 @@ __global__ void SweepFromTopToBottom(
+@@ -913,7 +1075,7 @@ __global__ void SweepFromTopToBottom(
    pcc_computer.local_ref_image.data = &local_ref_image_data[0];
  
    struct ParamState {
@@ -740,7 +740,7 @@ index 77d7c73..0f1a281 100755
      float normal[3] = {0};
    };
  
-@@ -952,7 +1113,7 @@ __global__ void SweepFromTopToBottom(
+@@ -952,7 +1114,7 @@ __global__ void SweepFromTopToBottom(
      // the depth of very oblique structures, i.e. pixels whose normal direction
      // is significantly different from their viewing direction.
      prev_param_state.depth = PropagateDepth(
@@ -749,7 +749,7 @@ index 77d7c73..0f1a281 100755
  
      // Read parameters for current pixel from previous sweep.
      curr_param_state.depth = depth_map.Get(row, col);
-@@ -960,7 +1121,7 @@ __global__ void SweepFromTopToBottom(
+@@ -960,7 +1122,7 @@ __global__ void SweepFromTopToBottom(
  
      // Generate random parameters.
      rand_param_state.depth =
@@ -758,7 +758,7 @@ index 77d7c73..0f1a281 100755
      PerturbNormal(row, col, options.perturbation * M_PI,
                    curr_param_state.normal, &rand_state,
                    rand_param_state.normal);
-@@ -1104,7 +1265,9 @@ __global__ void SweepFromTopToBottom(
+@@ -1104,7 +1266,9 @@ __global__ void SweepFromTopToBottom(
          float cos_incident_angle;
          ComputeViewingAngles(best_point, best_normal, image_idx,
                               &cos_triangulation_angle, &cos_incident_angle);
@@ -769,7 +769,7 @@ index 77d7c73..0f1a281 100755
              cos_incident_angle <= 0.0f) {
            continue;
          }
-@@ -1133,10 +1296,11 @@ __global__ void SweepFromTopToBottom(
+@@ -1133,10 +1297,11 @@ __global__ void SweepFromTopToBottom(
        }
  
        if (num_consistent < options.filter_min_num_consistent) {
@@ -785,7 +785,7 @@ index 77d7c73..0f1a281 100755
          for (int image_idx = 0; image_idx < cost_map.GetDepth(); ++image_idx) {
            consistency_mask.Set(row, col, image_idx, 0);
          }
-@@ -1170,9 +1334,7 @@ PatchMatchCuda::PatchMatchCuda(const PatchMatchOptions& options,
+@@ -1170,9 +1335,7 @@ PatchMatchCuda::PatchMatchCuda(const PatchMatchOptions& options,
  }
  
  PatchMatchCuda::~PatchMatchCuda() {
@@ -796,7 +796,7 @@ index 77d7c73..0f1a281 100755
  }
  
  void PatchMatchCuda::Run() {
-@@ -1318,6 +1480,11 @@ void PatchMatchCuda::RunWithWindowSizeAndStep() {
+@@ -1318,6 +1481,11 @@ void PatchMatchCuda::RunWithWindowSizeAndStep() {
  
        const bool last_sweep = iter == options_.num_iterations - 1 && sweep == 3;
  
@@ -808,7 +808,7 @@ index 77d7c73..0f1a281 100755
  #define CALL_SWEEP_FUNC                                                  \
    SweepFromTopToBottom<kWindowSize, kWindowStep, kGeomConsistencyTerm,   \
                         kFilterPhotoConsistency, kFilterGeomConsistency>  \
-@@ -1487,7 +1654,8 @@ void PatchMatchCuda::InitSourceImages() {
+@@ -1487,7 +1655,8 @@ void PatchMatchCuda::InitSourceImages() {
  
    // Upload source depth maps to device.
    if (options_.geom_consistency) {
@@ -818,7 +818,7 @@ index 77d7c73..0f1a281 100755
      std::vector<float> src_depth_maps_host_data(
          static_cast<size_t>(max_width * max_height *
                              problem_.src_image_idxs.size()),
-@@ -1528,106 +1696,85 @@ void PatchMatchCuda::InitTransforms() {
+@@ -1528,106 +1697,85 @@ void PatchMatchCuda::InitTransforms() {
    //////////////////////////////////////////////////////////////////////////////
  
    for (size_t i = 0; i < 4; ++i) {
@@ -877,12 +877,12 @@ index 77d7c73..0f1a281 100755
 +  CUDA_SAFE_CALL(cudaMemcpyToSymbol(ref_K, ref_K_host_[0], sizeof(float) * 6, 0, cudaMemcpyHostToDevice));
 +  CUDA_SAFE_CALL(cudaMemcpyToSymbol(ref_inv_K, ref_inv_K_host_[0], sizeof(float) * 6, 0, cudaMemcpyHostToDevice));
 +  CUDA_SAFE_CALL(cudaMemcpyToSymbol(ref_R, ref_R_host_[0], sizeof(float) * 9, 0,
-+                                    cudaMemcpyHostToDevice));
-+  CUDA_SAFE_CALL(cudaMemcpyToSymbol(ref_T, ref_T_host_[0],
-+                                    sizeof(float) * 3, 0,
                                      cudaMemcpyHostToDevice));
 -  CUDA_SAFE_CALL(cudaMemcpyToSymbol(ref_inv_K, ref_inv_K_host_[0],
 -                                    sizeof(float) * 4, 0,
++  CUDA_SAFE_CALL(cudaMemcpyToSymbol(ref_T, ref_T_host_[0],
++                                    sizeof(float) * 3, 0,
++                                    cudaMemcpyHostToDevice));
 +  CUDA_SAFE_CALL(cudaMemcpyToSymbol(ref_P, ref_P_host_[0],
 +                                    sizeof(float) * 16, 0,
 +                                    cudaMemcpyHostToDevice));
@@ -987,7 +987,7 @@ index 77d7c73..0f1a281 100755
  }
  
  void PatchMatchCuda::InitWorkspaceMemory() {
-@@ -1710,8 +1857,6 @@ void PatchMatchCuda::Rotate() {
+@@ -1710,8 +1858,6 @@ void PatchMatchCuda::Rotate() {
  
    // Rotate normal map.
    {
@@ -996,7 +996,7 @@ index 77d7c73..0f1a281 100755
      std::unique_ptr<GpuMat<float>> rotated_normal_map(
          new GpuMat<float>(width, height, 3));
      normal_map_->Rotate(rotated_normal_map.get());
-@@ -1751,18 +1896,31 @@ void PatchMatchCuda::Rotate() {
+@@ -1751,18 +1897,31 @@ void PatchMatchCuda::Rotate() {
      cost_map_.swap(rotated_cost_map);
    }
  
