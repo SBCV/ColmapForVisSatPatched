@@ -49,6 +49,7 @@ git diff src/ui/bundle_adjustment_widget.cc > "${PATCH_DP}/src__ui__bundle_adjus
 # src/base/colmap.cc has been reorganized into src/base/colmap.cc, src/base/sfm.cc, ...
 git diff src/exe/colmap.cc > "${PATCH_DP}/src__exe__colmap.cc.patch"
 git diff src/exe/sfm.cc > "${PATCH_DP}/src__exe__sfm.cc.patch"
+git diff src/exe/sfm.h > "${PATCH_DP}/src__exe__sfm.h.patch"
 
 git diff src/feature/sift.cc > "${PATCH_DP}/src__feature__sift.cc.patch"
 
