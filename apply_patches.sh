@@ -31,6 +31,7 @@ git apply $OPTIONS "${PATCH_DP}/src__base__reconstruction.cc.patch"
 git apply $OPTIONS "${PATCH_DP}/src__base__reconstruction.h.patch"
 
 git apply $OPTIONS "${PATCH_DP}/src__controllers__bundle_adjustment.cc.patch"
+git apply $OPTIONS "${PATCH_DP}/src__ui__bundle_adjustment_widget.cc.patch"
 
 git apply $OPTIONS "${PATCH_DP}/src__exe__colmap.cc.patch"
 git apply $OPTIONS "${PATCH_DP}/src__exe__sfm.cc.patch"
