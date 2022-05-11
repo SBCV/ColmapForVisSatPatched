@@ -7,6 +7,7 @@ This repository uses ```git patch``` to implement [ColmapForVisSat](https://gith
 ```
 git clone https://github.com/SBCV/ColmapForVisSatPatched.git /path/to/ColmapForVisSatPatched
 git clone https://github.com/colmap/colmap path/to/ColmapToBePatched
+cd path/to/ColmapToBePatched
 # Current patch files are created for 31df46c6c82bbdcaddbca180bc220d2eab9a1b5e (Mar 5, 2022)
 git checkout 31df46c6c82bbdcaddbca180bc220d2eab9a1b5e
 /path/to/ColmapForVisSatPatched/apply_patches.sh path/to/ColmapToBePatched
