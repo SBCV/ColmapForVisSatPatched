@@ -13,6 +13,9 @@ git checkout 31df46c6c82bbdcaddbca180bc220d2eab9a1b5e
 /path/to/ColmapForVisSatPatched/apply_patches.sh path/to/ColmapToBePatched
 ```
 
+Do not worry about type warnings (e.g. ```warning: src/base/camera.cc has type 100644, expected 100755```).
+
+
 ## Build patched Colmap repository
 - Run ```sudo apt-get install libmetis-dev```
 - If anaconda/miniconda is installed, make sure to run ```conda deactivate``` before running ```cmake```.
