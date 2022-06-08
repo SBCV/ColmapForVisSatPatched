@@ -1,6 +1,8 @@
 # ColmapForVisSatPatched
 This repository uses ```git patch``` to implement [ColmapForVisSat](https://github.com/Kai-46/ColmapForVisSat). Since ```ColmapForVisSat``` is a full copy of [Colmap](https://github.com/colmap/colmap), it is difficult to maintain. By relying on ```git apply <patch>``` this repository offers a simpler approach to incorporate the latest changes of the original ```Colmap``` library.
 
+## Compatibility
+
 **In contrast to the original ColmapForVisSat library, this repository supports CUDA 11.**
 
 ## Apply a set of patches to the original Colmap repository
