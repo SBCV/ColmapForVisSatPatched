@@ -21,7 +21,7 @@ Do not worry about type warnings (e.g. ```warning: src/base/camera.cc has type 1
 ## Build patched Colmap repository
 - Run ```sudo apt-get install libmetis-dev```
 - If anaconda/miniconda is installed, make sure to run ```conda deactivate``` before running ```cmake```.
-- Follow the [official install insctructions for linux](https://colmap.github.io/install.html#linux).
+- Follow the [official install insctructions of Colmap for Linux](https://colmap.github.io/install.html#linux).
 
 ## Create a set of patches from a modified Colmap repository
 ```
