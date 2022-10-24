@@ -9,7 +9,7 @@ This repository uses ```git patch``` to implement [ColmapForVisSat](https://gith
 Clone the repositories:
 ```
 git clone https://github.com/SBCV/ColmapForVisSatPatched.git /path/to/ColmapForVisSatPatched
-git clone https://github.com/colmap/colmap path/to/ColmapToBePatched
+git clone https://github.com/colmap/colmap.git path/to/ColmapToBePatched
 ```
 Checkout the Colmap version compatible to the current patch files with:
 ```
