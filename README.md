@@ -38,16 +38,43 @@ Note: Do NOT run `apply_patches.sh` with `sh $PathToColmapForVisSatPatched/apply
 - If anaconda/miniconda is installed, make sure to run ```conda deactivate``` before running ```cmake```.
 - Follow the [official install insctructions of Colmap for Linux](https://colmap.github.io/install.html#linux).
 
-## For contributors: Create a set of new patch files from the modified Colmap repository
-If you want to create patch files for a more recent Colmap version, you can use the following commands:
+## For contributors/developers: Create a set of new patch files for the latest Colmap version
+If you want to create patch files for a more recent Colmap version, you may want to use the following approach:
+
+First define some (temporary) environment variables:
 ```
-git clone https://github.com/SBCV/ColmapForVisSatPatched.git /path/to/ColmapForVisSatPatched
-git clone https://github.com/colmap/colmap path/to/ColmapWithModifications
-cd path/to/ColmapWithModifications
+PathToColmapForVisSatPatched="/path/to/ColmapForVisSatPatched"
+PathToColmapLatest="path/to/ColmapLatest"
+```
+Clone the repositories:
+```
+git clone https://github.com/SBCV/ColmapForVisSatPatched.git $PathToColmapForVisSatPatched
+git clone https://github.com/colmap/colmap.git $PathToColmapLatest
+cd $PathToColmapLatest
+```
+If desired checkout a specific commit - for example:
+```
 git checkout 31df46c6c82bbdcaddbca180bc220d2eab9a1b5e
-<make modifications>
-/path/to/ColmapForVisSatPatched/create_patches.sh path/to/ColmapWithModifications
 ```
+Try to apply the patches (this will probably not succeed, but it will show for which files the application of the corresponding patch failed).
+```
+$PathToColmapForVisSatPatched/apply_patches.sh $PathToColmapLatest
+```
+Example error:
+```
+error: patch failed: src/base/cost_functions.h:267
+error: src/base/cost_functions.h: patch does not apply
+```
+
+Use Github to view the corresponding patch file (e.g. [src__base__cost_functions.h.patch](https://github.com/SBCV/ColmapForVisSatPatched/blob/main/patches/src__base__cost_functions.h.patch)) - it will highlight the required additions in green. Copy the desired changes (i.e. the green parts) to corresponding place in the source code in `$PathToColmapLatest`! (e.g. [cost_functions.h](https://github.com/colmap/colmap/blob/dev/src/base/cost_functions.h))
+
+Open `$PathToColmapForVisSatPatched/create_patches.sh` and comment out all lines `git diff ...` for which the application of the patch worked in the previous run.
+
+Run the modified `create_patches.sh` script. It will create a new set of patches in `$PathToColmapForVisSatPatched/patches` overwriting previously outdated patches.
+```
+$PathToColmapForVisSatPatched/create_patches.sh $PathToColmapLatest
+```
+
 ## Non-trivial conversion notes
 
 ### Inconsistencies
