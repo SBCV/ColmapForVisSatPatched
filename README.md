@@ -38,7 +38,8 @@ Note: Do NOT run `apply_patches.sh` with `sh $PathToColmapForVisSatPatched/apply
 - If anaconda/miniconda is installed, make sure to run ```conda deactivate``` before running ```cmake```.
 - Follow the [official install insctructions of Colmap for Linux](https://colmap.github.io/install.html#linux).
 
-## Create a set of new patch files from the modified Colmap repository
+## For contributors: Create a set of new patch files from the modified Colmap repository
+If you want to create patch files for a more recent Colmap version, you can use the following commands:
 ```
 git clone https://github.com/SBCV/ColmapForVisSatPatched.git /path/to/ColmapForVisSatPatched
 git clone https://github.com/colmap/colmap path/to/ColmapWithModifications
