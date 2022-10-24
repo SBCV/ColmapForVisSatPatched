@@ -18,7 +18,10 @@ export PATCH_DP="${SH_FILE_DP}/patches"
 export ADDITIONAL_DP="${SH_FILE_DP}/additional_files"
 
 cd $COLMAP_TARGET_DP
-export OPTIONS=""	#"--reject"
+# Options:
+#  "-v"          Verbose: useful for debugging, shows why applying patch failed
+#  "--reject"
+export OPTIONS=""
 git apply $OPTIONS "${PATCH_DP}/.gitignore.patch"
 git apply $OPTIONS "${PATCH_DP}/CMakeLists.txt.patch"
 git apply $OPTIONS "${PATCH_DP}/README.md.patch"
