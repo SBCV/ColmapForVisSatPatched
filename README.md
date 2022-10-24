@@ -6,26 +6,31 @@ This repository uses ```git patch``` to implement [ColmapForVisSat](https://gith
 **In contrast to the original ColmapForVisSat library, this repository supports CUDA 11.**
 
 ## Apply a set of satellite specific patch files to the original Colmap repository
+Define two (temporary) variables storing the the repository locations on disk:
+```
+PathToColmapForVisSatPatched="/path/to/ColmapForVisSatPatched"
+PathToColmapToBePatched="path/to/ColmapToBePatched"
+```
 Clone the repositories:
 ```
-git clone https://github.com/SBCV/ColmapForVisSatPatched.git /path/to/ColmapForVisSatPatched
-git clone https://github.com/colmap/colmap.git path/to/ColmapToBePatched
+git clone https://github.com/SBCV/ColmapForVisSatPatched.git $PathToColmapForVisSatPatched
+git clone https://github.com/colmap/colmap.git $PathToColmapToBePatched
 ```
 Checkout the Colmap version compatible to the current patch files with:
 ```
-cd path/to/ColmapToBePatched
+cd $PathToColmapToBePatched
 # Current patch files are created for 31df46c6c82bbdcaddbca180bc220d2eab9a1b5e (Mar 5, 2022)
 git checkout 31df46c6c82bbdcaddbca180bc220d2eab9a1b5e
 ```
-Ensure that `apply_patches.sh` has execute permissions (`ls -l /path/to/ColmapForVisSatPatched/apply_patches.sh`) - for example by running:
+Ensure that `apply_patches.sh` has execute permissions (`ls -l $PathToColmapForVisSatPatched/apply_patches.sh`) - for example by running:
 ```
-chmod +x /path/to/ColmapForVisSatPatched/apply_patches.sh
+chmod +x $PathToColmapForVisSatPatched/apply_patches.sh
 ```
 Finally, apply the satellite specific patches with:
 ```
-/path/to/ColmapForVisSatPatched/apply_patches.sh path/to/ColmapToBePatched
+$PathToColmapForVisSatPatched/apply_patches.sh $PathToColmapToBePatched
 ```
-Note: Do NOT run `apply_patches.sh` with `sh /path/to/ColmapForVisSatPatched/apply_patches.sh` - this will not produce the required results! Do not worry about type warnings (e.g. ```warning: src/base/camera.cc has type 100644, expected 100755```).
+Note: Do NOT run `apply_patches.sh` with `sh $PathToColmapForVisSatPatched/apply_patches.sh` - this will not produce the required results! Do not worry about type warnings (e.g. ```warning: src/base/camera.cc has type 100644, expected 100755```).
 
 
 ## Build the patched Colmap repository
