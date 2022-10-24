@@ -5,13 +5,24 @@ This repository uses ```git patch``` to implement [ColmapForVisSat](https://gith
 
 **In contrast to the original ColmapForVisSat library, this repository supports CUDA 11.**
 
-## Apply a set of patches to the original Colmap repository
+## Apply a set of satellite specific patches to the original Colmap repository
+Clone the repositories:
 ```
 git clone https://github.com/SBCV/ColmapForVisSatPatched.git /path/to/ColmapForVisSatPatched
 git clone https://github.com/colmap/colmap path/to/ColmapToBePatched
+```
+Checkout the Colmap version compatible to the current patch files with:
+```
 cd path/to/ColmapToBePatched
 # Current patch files are created for 31df46c6c82bbdcaddbca180bc220d2eab9a1b5e (Mar 5, 2022)
 git checkout 31df46c6c82bbdcaddbca180bc220d2eab9a1b5e
+```
+Ensure that `apply_patches.sh` has execute permissions (`ls -l /path/to/ColmapForVisSatPatched/apply_patches.sh`) - for example by running:
+```
+chmod +x /path/to/ColmapForVisSatPatched/apply_patches.sh
+```
+Finally, apply the satellite specific patches with:
+```
 /path/to/ColmapForVisSatPatched/apply_patches.sh path/to/ColmapToBePatched
 ```
 
@@ -23,7 +34,7 @@ Do not worry about type warnings (e.g. ```warning: src/base/camera.cc has type 1
 - If anaconda/miniconda is installed, make sure to run ```conda deactivate``` before running ```cmake```.
 - Follow the [official install insctructions of Colmap for Linux](https://colmap.github.io/install.html#linux).
 
-## Create a set of patches from a modified Colmap repository
+## Create a set of new patch files from a modified Colmap repository
 ```
 git clone https://github.com/SBCV/ColmapForVisSatPatched.git /path/to/ColmapForVisSatPatched
 git clone https://github.com/colmap/colmap path/to/ColmapWithModifications
