@@ -8,7 +8,7 @@ This repository uses ```git patch``` to implement [ColmapForVisSat](https://gith
 ## Apply a set of satellite specific patch files to the original Colmap repository
 Define two (temporary) variables storing the the repository locations on disk:
 ```
-PathToColmapForVisSatPatched="/path/to/ColmapForVisSatPatched"
+PathToColmapForVisSatPatched="path/to/ColmapForVisSatPatched"
 PathToColmapToBePatched="path/to/ColmapToBePatched"
 ```
 Clone the repositories:
