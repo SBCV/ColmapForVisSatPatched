@@ -6,7 +6,7 @@ This repository uses ```git patch``` to implement [ColmapForVisSat](https://gith
 **In contrast to the original ColmapForVisSat library, this repository supports CUDA 11.**
 
 ## Apply a set of satellite specific patch files to the original Colmap repository
-Define two (temporary) variables storing the the repository locations on disk:
+Define two (temporary) variables storing the repository locations on disk:
 ```
 PathToColmapForVisSatPatched="path/to/ColmapForVisSatPatched"
 PathToColmapToBePatched="path/to/ColmapToBePatched"
