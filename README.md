@@ -66,7 +66,7 @@ error: patch failed: src/base/cost_functions.h:267
 error: src/base/cost_functions.h: patch does not apply
 ```
 
-Use Github to view the corresponding patch file (e.g. [src__base__cost_functions.h.patch](https://github.com/SBCV/ColmapForVisSatPatched/blob/main/patches/src__base__cost_functions.h.patch)) - it will highlight the required additions in green. Copy the desired changes (i.e. the green parts) to corresponding place in the source code in `$PathToColmapLatest`! (e.g. [cost_functions.h](https://github.com/colmap/colmap/blob/dev/src/base/cost_functions.h))
+Use Github or [PatchViewer](https://megatops.github.io/PatchViewer/) to view the corresponding patch file (e.g. [src__base__cost_functions.h.patch](https://github.com/SBCV/ColmapForVisSatPatched/blob/main/patches/src__base__cost_functions.h.patch)) - it will highlight the required changes. Copy the desired changes (i.e. the green parts) to corresponding place in the source code in `$PathToColmapLatest`! (e.g. [cost_functions.h](https://github.com/colmap/colmap/blob/dev/src/base/cost_functions.h))
 
 Open `$PathToColmapForVisSatPatched/create_patches.sh` and comment out all lines `git diff ...` for which the application of the patch worked in the previous run.
 
