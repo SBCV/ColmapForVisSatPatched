@@ -15,7 +15,6 @@ export COLMAP_TARGET_DP=$1
 cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd
 export SH_FILE_DP=$PWD
 export PATCH_DP="${SH_FILE_DP}/patches"
-export ADDITIONAL_DP="${SH_FILE_DP}/additional_files"
 
 cd $COLMAP_TARGET_DP
 # Options:
@@ -61,11 +60,3 @@ git apply $OPTIONS "${PATCH_DP}/src__optim__bundle_adjustment.cc.patch"
 git apply $OPTIONS "${PATCH_DP}/src__optim__bundle_adjustment.h.patch"
 git apply $OPTIONS "${PATCH_DP}/src__sfm__incremental_mapper.cc.patch"
 git apply $OPTIONS "${PATCH_DP}/src__util__option_manager.cc.patch"
-
-# Copy additional files
-cp "${ADDITIONAL_DP}/install_without_sudo.sh" "${COLMAP_TARGET_DP}/install_without_sudo.sh"
-mkdir "${COLMAP_TARGET_DP}/ubuntu_scripts"
-cp "${ADDITIONAL_DP}/ubuntu1804_build_colmap.sh" "${COLMAP_TARGET_DP}/ubuntu_scripts/ubuntu1804_build_colmap.sh"
-cp "${ADDITIONAL_DP}/ubuntu1804_install_colmap.sh" "${COLMAP_TARGET_DP}/ubuntu_scripts/ubuntu1804_install_colmap.sh"
-cp "${ADDITIONAL_DP}/ubuntu1804_install_dependencies.sh" "${COLMAP_TARGET_DP}/ubuntu_scripts/ubuntu1804_install_dependencies.sh"
-cp "${ADDITIONAL_DP}/ubuntu1804_make_eclipse.sh" "${COLMAP_TARGET_DP}/ubuntu_scripts/ubuntu1804_make_eclipse.sh"
