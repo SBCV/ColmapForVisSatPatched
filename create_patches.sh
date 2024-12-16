@@ -23,12 +23,6 @@ echo "Creating patch files in: $PATCH_DP"
 
 cd $MODIFIED_COLMAP_SOURCE_DP
 
-# Since the following files are not part of colmap, we copy these files (instead of using git diff).
-#  - install_without_sudo.sh
-#  - ubuntu_scripts/ubuntu1804_build_colmap.sh
-#  - ubuntu_scripts/ubuntu1804_install_colmap.sh
-#  - ubuntu_scripts/ubuntu1804_install_dependencies.sh
-#  - ubuntu_scripts/ubuntu1804_make_eclipse.sh
 
 git diff .gitignore > "${PATCH_DP}/.gitignore.patch"
 git diff CMakeLists.txt > "${PATCH_DP}/CMakeLists.txt.patch"
