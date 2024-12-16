@@ -114,7 +114,8 @@ for COMMIT_SHA in $COMMIT_LIST;
 do
     echo ""
     echo "---------------------------------------------------------------------"
-    echo "-------- Processing $COMMIT_SHA --------"
+    echo "-------- $COMMIT_SHA --------"
+    echo "-------------- ($(git show -s --format=%ci $COMMIT_SHA)) --------------"
     echo "---------------------------------------------------------------------"
     echo ""
     git switch --force $MAIN_BRANCH >/dev/null 2>&1
