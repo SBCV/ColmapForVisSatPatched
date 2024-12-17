@@ -8,13 +8,13 @@
 if [ $# -lt 2 ] || [ $# -gt 3 ]; then
     echo "Script expects between 2 and 3 parameters, but ${#} provided!" >&2
     echo "Usage: $0 <path_to_colmap_source> <colmap_compatible_commit_hash> <colmap_target_commit_hash>"
-    echo "The last parameter <colmap_target_hash> is optional."
+    echo "The last parameter <colmap_target_hash> is optional. Can be set to HEAD."
     exit 2
 fi
 
 COLMAP_TARGET_DP=$1
 COLMAP_COMPATIBLE_COMMIT_HASH=$2
-COLMAP_TARGET_COMMIT_HASH=${3:-"HEAD"} # "${3:=default}"
+COLMAP_TARGET_COMMIT_HASH=${3:-$2}
 
 MAIN_BRANCH="main"
 VISSAT_BRANCH="vissat"
