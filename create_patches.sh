@@ -35,8 +35,6 @@ create_patch() {
     fi
 }
 
-
-create_patch CMakeLists.txt "CMakeLists.txt.patch"
 create_patch README.md "README.md.patch"
 
 create_patch src/base/camera.cc "src__base__camera.cc.patch"
