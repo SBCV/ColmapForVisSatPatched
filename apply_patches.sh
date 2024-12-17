@@ -71,7 +71,6 @@ patches=(
     ".gitignore.patch"
     "CMakeLists.txt.patch"
     "README.md.patch"
-    "scripts__python__build.py.patch"
     "src__base__camera.cc.patch"
     "src__base__camera_models.h.patch"
     "src__base__cost_functions.h.patch"
