@@ -3,71 +3,83 @@
 # This script expects the following parameter:
 # 	the path to a (MODIFIED) colmap source directory for wich a set of patches should be computed 
 
-if [ $# -lt 1 ] || [ $# -gt 1 ]; then
-    echo "Script expects 1 parameter, but ${#} provided!" >&2
-    echo "Usage: $0 <path_to_MODIFIED_colmap_source>"
+if [ $# -lt 1 ] || [ $# -gt 2 ]; then
+    echo "Script expects 1 or 2 parameters, but ${#} provided!" >&2
+    echo "Usage: $0 <path_to_MODIFIED_colmap_source> <overwrite_flag>"
+    echo "The last parameter <overwrite_flag> is optional."
     exit 2
 fi
 
-export ORIGINAL_DP=$PWD
+original_dp=$PWD
 
-export MODIFIED_COLMAP_SOURCE_DP=$1
-echo "Reading colmap from: $MODIFIED_COLMAP_SOURCE_DP"
+modified_colmap_source_dp=$1
+overwrite_patch_file=${2:-1}   # Set 1 as default parameter
+
+echo "Reading colmap from: $modified_colmap_source_dp"
 
 # Go to the directory where the script is located
 cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd
-export SH_FILE_DP=$PWD
-export PATCH_DP="${SH_FILE_DP}/patches"
+sh_file_dp=$PWD
+patch_dp="${sh_file_dp}/patches"
 
-echo "Creating patch files in: $PATCH_DP"
+echo "Creating patch files in: $patch_dp"
 
-cd $MODIFIED_COLMAP_SOURCE_DP
+cd $modified_colmap_source_dp
+
+create_patch() {
+    local source_fp=$1
+    local patch_fn=$2
+    local patch_fp="$patch_dp/$patch_fn"
+    if [ "$overwrite_patch_file" -eq 1 ] || [ ! -f "$patch_fp" ]; then
+        git diff "$source_fp" > "$patch_fp"
+    fi
+}
 
 
-git diff .gitignore > "${PATCH_DP}/.gitignore.patch"
-git diff CMakeLists.txt > "${PATCH_DP}/CMakeLists.txt.patch"
-git diff README.md > "${PATCH_DP}/README.md.patch"
-git diff scripts/python/build.py > "${PATCH_DP}/scripts__python__build.py.patch"
+create_patch .gitignore ".gitignore.patch"
+create_patch CMakeLists.txt "CMakeLists.txt.patch"
+create_patch README.md "README.md.patch"
+create_patch scripts/python/build.py "scripts__python__build.py.patch"
 
-git diff src/base/camera.cc > "${PATCH_DP}/src__base__camera.cc.patch"
-git diff src/base/camera_models.h > "${PATCH_DP}/src__base__camera_models.h.patch"
-git diff src/base/cost_functions.h > "${PATCH_DP}/src__base__cost_functions.h.patch"
-git diff src/base/database_cache.h > "${PATCH_DP}/src__base__database_cache.h.patch"
-git diff src/base/reconstruction.cc > "${PATCH_DP}/src__base__reconstruction.cc.patch"
-git diff src/base/reconstruction.h > "${PATCH_DP}/src__base__reconstruction.h.patch"
+create_patch src/base/camera.cc "src__base__camera.cc.patch"
+create_patch src/base/camera_models.h "src__base__camera_models.h.patch"
+create_patch src/base/cost_functions.h "src__base__cost_functions.h.patch"
+create_patch src/base/database_cache.h "src__base__database_cache.h.patch"
+create_patch src/base/reconstruction.cc "src__base__reconstruction.cc.patch"
+create_patch src/base/reconstruction.h "src__base__reconstruction.h.patch"
 
-git diff src/controllers/bundle_adjustment.cc > "${PATCH_DP}/src__controllers__bundle_adjustment.cc.patch"
+create_patch src/controllers/bundle_adjustment.cc "src__controllers__bundle_adjustment.cc.patch"
 # Normalization has been moved from src/controllers/bundle_adjustment.cc to src/ui/bundle_adjustment_widget.cc
-git diff src/ui/bundle_adjustment_widget.cc > "${PATCH_DP}/src__ui__bundle_adjustment_widget.cc.patch"
+create_patch src/ui/bundle_adjustment_widget.cc "src__ui__bundle_adjustment_widget.cc.patch"
 
 # src/base/colmap.cc has been reorganized into src/base/colmap.cc, src/base/sfm.cc, ...
-git diff src/exe/colmap.cc > "${PATCH_DP}/src__exe__colmap.cc.patch"
-git diff src/exe/sfm.cc > "${PATCH_DP}/src__exe__sfm.cc.patch"
-git diff src/exe/sfm.h > "${PATCH_DP}/src__exe__sfm.h.patch"
+create_patch src/exe/colmap.cc "src__exe__colmap.cc.patch"
+create_patch src/exe/sfm.cc "src__exe__sfm.cc.patch"
+create_patch src/exe/sfm.h "src__exe__sfm.h.patch"
 
-git diff src/feature/sift.cc > "${PATCH_DP}/src__feature__sift.cc.patch"
+create_patch src/feature/sift.cc "src__feature__sift.cc.patch"
 
-git diff src/mvs/depth_map.cc > "${PATCH_DP}/src__mvs__depth_map.cc.patch"
-git diff src/mvs/depth_map.h > "${PATCH_DP}/src__mvs__depth_map.h.patch"
-git diff src/mvs/fusion.cc > "${PATCH_DP}/src__mvs__fusion.cc.patch"
-git diff src/mvs/fusion.h > "${PATCH_DP}/src__mvs__fusion.h.patch"
-git diff src/mvs/image.cc > "${PATCH_DP}/src__mvs__image.cc.patch"
-git diff src/mvs/image.h > "${PATCH_DP}/src__mvs__image.h.patch"
+create_patch src/mvs/depth_map.cc "src__mvs__depth_map.cc.patch"
+create_patch src/mvs/depth_map.h "src__mvs__depth_map.h.patch"
+create_patch src/mvs/fusion.cc "src__mvs__fusion.cc.patch"
+create_patch src/mvs/fusion.h "src__mvs__fusion.h.patch"
+create_patch src/mvs/image.cc "src__mvs__image.cc.patch"
+create_patch src/mvs/image.h "src__mvs__image.h.patch"
 # src/mvs/mat.h has no actual changes
-git diff src/mvs/model.cc > "${PATCH_DP}/src__mvs__model.cc.patch"
-git diff src/mvs/model.h > "${PATCH_DP}/src__mvs__model.h.patch"
-git diff src/mvs/patch_match.cc > "${PATCH_DP}/src__mvs__patch_match.cc.patch"
-git diff src/mvs/patch_match.h > "${PATCH_DP}/src__mvs__patch_match.h.patch"
-git diff src/mvs/patch_match_cuda.cu > "${PATCH_DP}/src__mvs__patch_match_cuda.cu.patch"
-git diff src/mvs/patch_match_cuda.h > "${PATCH_DP}/src__mvs__patch_match_cuda.h.patch"
-git diff src/mvs/workspace.cc > "${PATCH_DP}/src__mvs__workspace.cc.patch"
-git diff src/mvs/workspace.h > "${PATCH_DP}/src__mvs__workspace.h.patch"
+create_patch src/mvs/model.cc "src__mvs__model.cc.patch"
+create_patch src/mvs/model.h "src__mvs__model.h.patch"
+create_patch src/mvs/patch_match.cc "src__mvs__patch_match.cc.patch"
+create_patch src/mvs/patch_match.h "src__mvs__patch_match.h.patch"
+create_patch src/mvs/patch_match_cuda.cu "src__mvs__patch_match_cuda.cu.patch"
+create_patch src/mvs/patch_match_cuda.h "src__mvs__patch_match_cuda.h.patch"
+create_patch src/mvs/workspace.cc "src__mvs__workspace.cc.patch"
+create_patch src/mvs/workspace.h "src__mvs__workspace.h.patch"
 
-git diff src/optim/bundle_adjustment.cc > "${PATCH_DP}/src__optim__bundle_adjustment.cc.patch"
-git diff src/optim/bundle_adjustment.h > "${PATCH_DP}/src__optim__bundle_adjustment.h.patch"
+create_patch src/optim/bundle_adjustment.cc "src__optim__bundle_adjustment.cc.patch"
+create_patch src/optim/bundle_adjustment.h "src__optim__bundle_adjustment.h.patch"
 
-git diff src/sfm/incremental_mapper.cc > "${PATCH_DP}/src__sfm__incremental_mapper.cc.patch"
+create_patch src/sfm/incremental_mapper.cc "src__sfm__incremental_mapper.cc.patch"
 
-git diff src/util/option_manager.cc > "${PATCH_DP}/src__util__option_manager.cc.patch"
+create_patch src/util/option_manager.cc "src__util__option_manager.cc.patch"
 
-cd $ORIGINAL_DP
+cd $original_dp
