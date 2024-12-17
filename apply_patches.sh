@@ -53,7 +53,7 @@ apply_patches() {
     # Loop through each patch file
     for patch in "$@";
     do
-        git apply $OPTIONS "$patch"
+        git apply $OPTIONS "$PATCH_DP/$patch"
 
         # Check the exit status of git apply
         if [ $? -ne 0 ]; then
@@ -68,45 +68,45 @@ apply_patches() {
 }
 
 patches=(
-    "${PATCH_DP}/.gitignore.patch"
-    "${PATCH_DP}/CMakeLists.txt.patch"
-    "${PATCH_DP}/README.md.patch"
-    "${PATCH_DP}/scripts__python__build.py.patch"
-    "${PATCH_DP}/src__base__camera.cc.patch"
-    "${PATCH_DP}/src__base__camera_models.h.patch"
-    "${PATCH_DP}/src__base__cost_functions.h.patch"
-    "${PATCH_DP}/src__base__database_cache.h.patch"
-    "${PATCH_DP}/src__base__reconstruction.cc.patch"
-    "${PATCH_DP}/src__base__reconstruction.h.patch"
+    ".gitignore.patch"
+    "CMakeLists.txt.patch"
+    "README.md.patch"
+    "scripts__python__build.py.patch"
+    "src__base__camera.cc.patch"
+    "src__base__camera_models.h.patch"
+    "src__base__cost_functions.h.patch"
+    "src__base__database_cache.h.patch"
+    "src__base__reconstruction.cc.patch"
+    "src__base__reconstruction.h.patch"
 
-    "${PATCH_DP}/src__controllers__bundle_adjustment.cc.patch"
-    "${PATCH_DP}/src__ui__bundle_adjustment_widget.cc.patch"
+    "src__controllers__bundle_adjustment.cc.patch"
+    "src__ui__bundle_adjustment_widget.cc.patch"
 
-    "${PATCH_DP}/src__exe__colmap.cc.patch"
-    "${PATCH_DP}/src__exe__sfm.cc.patch"
-    "${PATCH_DP}/src__exe__sfm.h.patch"
+    "src__exe__colmap.cc.patch"
+    "src__exe__sfm.cc.patch"
+    "src__exe__sfm.h.patch"
 
-    "${PATCH_DP}/src__feature__sift.cc.patch"
+    "src__feature__sift.cc.patch"
 
-    "${PATCH_DP}/src__mvs__depth_map.cc.patch"
-    "${PATCH_DP}/src__mvs__depth_map.h.patch"
-    "${PATCH_DP}/src__mvs__fusion.cc.patch"
-    "${PATCH_DP}/src__mvs__fusion.h.patch"
-    "${PATCH_DP}/src__mvs__image.cc.patch"
-    "${PATCH_DP}/src__mvs__image.h.patch"
-    "${PATCH_DP}/src__mvs__model.cc.patch"
-    "${PATCH_DP}/src__mvs__model.h.patch"
-    "${PATCH_DP}/src__mvs__patch_match.cc.patch"
-    "${PATCH_DP}/src__mvs__patch_match.h.patch"
-    "${PATCH_DP}/src__mvs__patch_match_cuda.cu.patch"
-    "${PATCH_DP}/src__mvs__patch_match_cuda.h.patch"
-    "${PATCH_DP}/src__mvs__workspace.cc.patch"
-    "${PATCH_DP}/src__mvs__workspace.h.patch"
+    "src__mvs__depth_map.cc.patch"
+    "src__mvs__depth_map.h.patch"
+    "src__mvs__fusion.cc.patch"
+    "src__mvs__fusion.h.patch"
+    "src__mvs__image.cc.patch"
+    "src__mvs__image.h.patch"
+    "src__mvs__model.cc.patch"
+    "src__mvs__model.h.patch"
+    "src__mvs__patch_match.cc.patch"
+    "src__mvs__patch_match.h.patch"
+    "src__mvs__patch_match_cuda.cu.patch"
+    "src__mvs__patch_match_cuda.h.patch"
+    "src__mvs__workspace.cc.patch"
+    "src__mvs__workspace.h.patch"
 
-    "${PATCH_DP}/src__optim__bundle_adjustment.cc.patch"
-    "${PATCH_DP}/src__optim__bundle_adjustment.h.patch"
-    "${PATCH_DP}/src__sfm__incremental_mapper.cc.patch"
-    "${PATCH_DP}/src__util__option_manager.cc.patch"
+    "src__optim__bundle_adjustment.cc.patch"
+    "src__optim__bundle_adjustment.h.patch"
+    "src__sfm__incremental_mapper.cc.patch"
+    "src__util__option_manager.cc.patch"
 )
 
 
