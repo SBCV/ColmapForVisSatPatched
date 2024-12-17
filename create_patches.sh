@@ -36,7 +36,6 @@ create_patch() {
 }
 
 
-create_patch .gitignore ".gitignore.patch"
 create_patch CMakeLists.txt "CMakeLists.txt.patch"
 create_patch README.md "README.md.patch"
 

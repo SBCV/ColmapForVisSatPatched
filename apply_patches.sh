@@ -68,7 +68,6 @@ apply_patches() {
 }
 
 patches=(
-    ".gitignore.patch"
     "CMakeLists.txt.patch"
     "README.md.patch"
     "src__base__camera.cc.patch"
