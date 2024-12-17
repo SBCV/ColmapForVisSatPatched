@@ -35,8 +35,6 @@ create_patch() {
     fi
 }
 
-create_patch README.md "README.md.patch"
-
 create_patch src/base/camera.cc "src__base__camera.cc.patch"
 create_patch src/base/camera_models.h "src__base__camera_models.h.patch"
 create_patch src/base/cost_functions.h "src__base__cost_functions.h.patch"

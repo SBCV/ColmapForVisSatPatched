@@ -68,7 +68,6 @@ apply_patches() {
 }
 
 patches=(
-    "README.md.patch"
     "src__base__camera.cc.patch"
     "src__base__camera_models.h.patch"
     "src__base__cost_functions.h.patch"
