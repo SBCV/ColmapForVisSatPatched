@@ -96,7 +96,6 @@ patches=(
     "src__mvs__patch_match.h.patch"
     "src__mvs__patch_match_cuda.cu.patch"
     "src__mvs__patch_match_cuda.h.patch"
-    "src__mvs__workspace.cc.patch"
     "src__mvs__workspace.h.patch"
 
     "src__optim__bundle_adjustment.cc.patch"

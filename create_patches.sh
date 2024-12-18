@@ -104,7 +104,6 @@ create_patch src/mvs/patch_match.cc "src__mvs__patch_match.cc.patch"
 create_patch src/mvs/patch_match.h "src__mvs__patch_match.h.patch"
 create_patch src/mvs/patch_match_cuda.cu "src__mvs__patch_match_cuda.cu.patch"
 create_patch src/mvs/patch_match_cuda.h "src__mvs__patch_match_cuda.h.patch"
-create_patch src/mvs/workspace.cc "src__mvs__workspace.cc.patch"
 create_patch src/mvs/workspace.h "src__mvs__workspace.h.patch"
 
 create_patch src/optim/bundle_adjustment.cc "src__optim__bundle_adjustment.cc.patch"
