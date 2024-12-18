@@ -1,5 +1,5 @@
 diff --git a/src/mvs/model.cc b/src/mvs/model.cc
-index f03f67f..70ba97c 100755
+index f03f67f3..25668d0b 100755
 --- a/src/mvs/model.cc
 +++ b/src/mvs/model.cc
 @@ -1,3 +1,35 @@
@@ -154,7 +154,7 @@ index f03f67f..70ba97c 100755
 +  std::ofstream img_idx2name_file(JoinPaths(path, "img_idx2name.txt"), std::ios::trunc);
 +  for(size_t i=0; i < image_names_.size(); ++i) {
 +    img_idx2name_file << i << " " << image_names_[i] << "\n";
-+  }
+   }
 +  img_idx2name_file.close();
 +
 +  // write projection matrices and inverse projection matrices to files
@@ -183,22 +183,17 @@ index f03f67f..70ba97c 100755
 +    P_file << '\n';
 +    inv_P_file << '\n';
 +
-   }
++  }
 +
 +  P_file.close();
 +  inv_P_file.close();
  }
  
  int Model::GetImageIdx(const std::string& name) const {
-@@ -168,53 +275,6 @@ std::vector<std::vector<int>> Model::GetMaxOverlappingImages(
-   return overlapping_images;
+@@ -173,47 +280,6 @@ const std::vector<std::vector<int>>& Model::GetMaxOverlappingImagesFromPMVS()
+   return pmvs_vis_dat_;
  }
  
--const std::vector<std::vector<int>>& Model::GetMaxOverlappingImagesFromPMVS()
--    const {
--  return pmvs_vis_dat_;
--}
--
 -std::vector<std::pair<float, float>> Model::ComputeDepthRanges() const {
 -  std::vector<std::vector<float>> depths(images.size());
 -  for (const auto& point : points) {
@@ -240,11 +235,10 @@ index f03f67f..70ba97c 100755
 -
 -  return depth_ranges;
 -}
--
+ 
  std::vector<std::map<int, int>> Model::ComputeSharedPoints() const {
    std::vector<std::map<int, int>> shared_points(images.size());
-   for (const auto& point : points) {
-@@ -237,9 +297,9 @@ std::vector<std::map<int, float>> Model::ComputeTriangulationAngles(
+@@ -237,9 +303,9 @@ std::vector<std::map<int, float>> Model::ComputeTriangulationAngles(
    std::vector<Eigen::Vector3d> proj_centers(images.size());
    for (size_t image_idx = 0; image_idx < images.size(); ++image_idx) {
      const auto& image = images[image_idx];
@@ -257,7 +251,7 @@ index f03f67f..70ba97c 100755
    }
  
    std::vector<std::map<int, std::vector<float>>> all_triangulation_angles(
-@@ -273,176 +333,5 @@ std::vector<std::map<int, float>> Model::ComputeTriangulationAngles(
+@@ -273,176 +339,5 @@ std::vector<std::map<int, float>> Model::ComputeTriangulationAngles(
    return triangulation_angles;
  }
  
