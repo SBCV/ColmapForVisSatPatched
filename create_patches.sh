@@ -35,27 +35,31 @@ reset_file_if_only_index_changes() {
 
     # shortstat_result=$(git diff --shortstat $patch_fp)
     numstat_result=$(git diff --numstat $patch_fp)
-    read -r num_added_lines num_deleted_lines fn <<< "$numstat_result"
 
-    if [ $num_added_lines == 1 ] && [ $num_deleted_lines == 1 ]; then
-        local diff_output=$(git diff -- "$patch_fp")
-        # printf "%s\n" "$diff_output"
+    # If numstat_result is empty, the file is up-to-date and there is nothing to restore.
+    if [ -n "$numstat_result" ]; then
+        read -r num_added_lines num_deleted_lines fn <<< "$numstat_result"
 
-        # Check for lines that start with "+index"" or "-index"
-        local added_index_lines=$(echo "$diff_output" | grep '^+index')
-        local removed_index_lines=$(echo "$diff_output" | grep '^-index')
-        local num_added_index_lines=$(echo "$added_index_lines" | wc -l)
-        local num_removed_index_lines=$(echo "$removed_index_lines" | wc -l)
+        if [ $num_added_lines == 1 ] && [ $num_deleted_lines == 1 ]; then
+            local diff_output=$(git diff -- "$patch_fp")
+            # printf "%s\n" "$diff_output"
 
-        if [ $num_added_index_lines == 1 ] && [ $num_removed_index_lines == 1 ]; then
-            # echo "Only index lines have changed in $patch_fp"
-            git restore $patch_fp
-        else
-            echo "ERROR: SINGLE CHANGE (BUT NOT INDEX LINE) in $patch_fp"
-            exit
+            # Check for lines that start with "+index"" or "-index"
+            local added_index_lines=$(echo "$diff_output" | grep '^+index')
+            local removed_index_lines=$(echo "$diff_output" | grep '^-index')
+            local num_added_index_lines=$(echo "$added_index_lines" | wc -l)
+            local num_removed_index_lines=$(echo "$removed_index_lines" | wc -l)
+
+            if [ $num_added_index_lines == 1 ] && [ $num_removed_index_lines == 1 ]; then
+                # echo "Only index lines have changed in $patch_fp"
+                git restore $patch_fp
+            else
+                echo "ERROR: SINGLE CHANGE (BUT NOT INDEX LINE) in $patch_fp"
+                exit
+            fi
+        # else
+        #     echo "Actual changes in $patch_fp"
         fi
-    # else
-    #     echo "Actual changes in $patch_fp"
     fi
 
     # Switch back to the previous directory (i.e. the colmap git repository)
