@@ -1,5 +1,5 @@
 diff --git a/src/base/database_cache.h b/src/base/database_cache.h
-index db50150c5..a994ad300 100644
+index db50150c..a994ad30 100644
 --- a/src/base/database_cache.h
 +++ b/src/base/database_cache.h
 @@ -1,3 +1,35 @@

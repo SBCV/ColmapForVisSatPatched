@@ -1,5 +1,5 @@
 diff --git a/src/base/camera_models.h b/src/base/camera_models.h
-index 2db6bb357..d5fbebd64 100644
+index d1f56cd8..fa22e2fb 100644
 --- a/src/base/camera_models.h
 +++ b/src/base/camera_models.h
 @@ -1,3 +1,35 @@

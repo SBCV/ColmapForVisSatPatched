@@ -1,5 +1,5 @@
 diff --git a/src/controllers/bundle_adjustment.cc b/src/controllers/bundle_adjustment.cc
-index 7632b5f66..7ca5562b3 100644
+index 7632b5f6..cf3a11de 100644
 --- a/src/controllers/bundle_adjustment.cc
 +++ b/src/controllers/bundle_adjustment.cc
 @@ -1,3 +1,35 @@
