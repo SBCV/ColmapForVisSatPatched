@@ -139,6 +139,10 @@ do
 
     apply_patches "${patches[@]}"
 
+    if [ $APPLY_MODE == "3way" ]; then
+        git restore --staged .
+    fi
+
     if [ $? -ne 0 ]; then
         echo "apply_patches failed for commit: $COMMIT_SHA"
         echo "---------------------------------------------------------------------"
