@@ -1,5 +1,5 @@
 diff --git a/src/base/cost_functions.h b/src/base/cost_functions.h
-index e7d0a5d30..76358f375 100644
+index e7d0a5d3..76358f37 100644
 --- a/src/base/cost_functions.h
 +++ b/src/base/cost_functions.h
 @@ -1,3 +1,35 @@
