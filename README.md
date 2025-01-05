@@ -19,8 +19,8 @@ git clone https://github.com/colmap/colmap.git $PathToColmapToBePatched
 Checkout the Colmap version compatible to the current patch files with:
 ```
 cd $PathToColmapToBePatched
-# Current patch files are created for 919a4f07c20931c20ec626b488ea8e8747bfac25 (2023-01-26 09:39:06 +0100)
-git checkout 919a4f07c20931c20ec626b488ea8e8747bfac25
+# Current patch files are created for d3c8d5d457569ff93804a61d1be45f18e5b43d27 (2023-02-18 08:39:04 +0000)
+git checkout d3c8d5d457569ff93804a61d1be45f18e5b43d27
 ```
 Ensure that `apply_patches.sh` has execute permissions (`ls -l $PathToColmapForVisSatPatched/apply_patches.sh`) - for example by running:
 ```
