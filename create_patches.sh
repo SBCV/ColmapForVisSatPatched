@@ -3,10 +3,10 @@
 # This script expects the following parameter:
 # 	the path to a (MODIFIED) colmap source directory for wich a set of patches should be computed 
 
-if [ $# -lt 1 ] || [ $# -gt 2 ]; then
-    echo "Script expects 1 or 2 parameters, but ${#} provided!" >&2
-    echo "Usage: $0 <path_to_MODIFIED_colmap_source> <overwrite_flag>"
-    echo "The last parameter <overwrite_flag> is optional."
+if [ $# -lt 1 ] || [ $# -gt 3 ]; then
+    echo "Script expects beteen 1 and 3 parameters, but ${#} provided!" >&2
+    echo "Usage: $0 <path_to_MODIFIED_colmap_source> <overwrite_flag> <reset_index_changes>"
+    echo "The last parameters <overwrite_flag> and <reset_index_changes> are optional."
     exit 2
 fi
 
@@ -14,6 +14,7 @@ original_dp=$PWD
 
 modified_colmap_source_dp=$1
 overwrite_patch_file=${2:-1}   # Set 1 as default parameter
+reset_index_changes=${3:-1}    # Set 1 as default parameter
 
 echo "Reading colmap from: $modified_colmap_source_dp"
 
@@ -77,9 +78,13 @@ create_patch() {
     local patch_fp="$patch_dp/$patch_fn"
     if [ "$overwrite_patch_file" -eq 1 ] || [ ! -f "$patch_fp" ]; then
         git diff "$source_fp" > "$patch_fp"
-        reset_file_if_only_index_changes $patch_fp
-        # Get return value of reset_file_if_only_index_changes
-        performed_git_restore=$?
+        if [ $reset_index_changes == 1 ]; then
+            reset_file_if_only_index_changes $patch_fp
+            # Get return value of reset_file_if_only_index_changes
+            performed_git_restore=$?
+        else
+            performed_git_restore=0
+        fi
         if [ $performed_git_restore == 0 ]; then
             echo "Running: git diff \"$source_fp\" > \"$patch_fp\""
         fi
