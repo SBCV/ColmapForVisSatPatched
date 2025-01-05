@@ -1,20 +1,32 @@
 #!/bin/bash
 
 # This script expects the following parameter:
+#   - mode (reject or 3way) for applying the patches
 # 	- the path to the colmap source directory wich will be modified using a set of patches
 #   - the commit SHA-1 hash of the colmap version compatible to the patch files
 #   - the commit SHA-1 hash or "latest" of the colmap version we would like to update the patch files (optional)
 
-if [ $# -lt 2 ] || [ $# -gt 3 ]; then
-    echo "Script expects between 2 and 3 parameters, but ${#} provided!" >&2
-    echo "Usage: $0 <path_to_colmap_source> <colmap_compatible_commit_hash> <colmap_target_commit_hash>"
+if [ $# -lt 3 ] || [ $# -gt 4 ]; then
+    echo "Script expects between 3 and 4 parameters, but ${#} provided!" >&2
+    echo "Usage: $0 <mode> <path_to_colmap_source> <colmap_compatible_commit_hash> <colmap_target_commit_hash>"
+    echo "Valid values for the <mode> parameter are reject and 3way".
     echo "The last parameter <colmap_target_hash> is optional. Can be set to HEAD."
     exit 2
 fi
 
-COLMAP_TARGET_DP=$1
-COLMAP_COMPATIBLE_COMMIT_HASH=$2
-COLMAP_TARGET_COMMIT_HASH=${3:-$2}
+APPLY_MODE=$1
+COLMAP_TARGET_DP=$2
+COLMAP_COMPATIBLE_COMMIT_HASH=$3
+COLMAP_TARGET_COMMIT_HASH=${4:-$3}
+
+case "$APPLY_MODE" in
+  reject|3way)
+    ;;
+  *)
+    echo "Invalid parameter: $APPLY_MODE. Allowed values are: reject and 3way"
+    exit 1
+    ;;
+esac
 
 MAIN_BRANCH="main"
 VISSAT_BRANCH="vissat"
@@ -48,7 +60,10 @@ apply_patches() {
     # Options:
     #  "-v"         Verbose (useful for debugging, shows why applying patch failed)
     #  "--reject"   Creation of *.rej files (hunks that failed to apply) 
-    OPTIONS="--reject"
+    #  "--3way"     this is similar to the "fuzz" option of "patch" and allows for a
+    #               less strict matching of context lines.
+    # Note: The "--reject" and "--3way" options can not be used together
+    OPTIONS="--$APPLY_MODE"
 
     # Loop through each patch file
     for patch in "$@";
