@@ -36,6 +36,8 @@ reset_file_if_only_index_changes() {
     # shortstat_result=$(git diff --shortstat $patch_fp)
     numstat_result=$(git diff --numstat $patch_fp)
 
+    performed_git_restore=0
+
     # If numstat_result is empty, the file is up-to-date and there is nothing to restore.
     if [ -n "$numstat_result" ]; then
         read -r num_added_lines num_deleted_lines fn <<< "$numstat_result"
@@ -53,6 +55,7 @@ reset_file_if_only_index_changes() {
             if [ $num_added_index_lines == 1 ] && [ $num_removed_index_lines == 1 ]; then
                 # echo "Only index lines have changed in $patch_fp"
                 git restore $patch_fp
+                performed_git_restore=1
             else
                 echo "ERROR: SINGLE CHANGE (BUT NOT INDEX LINE) in $patch_fp"
                 exit
@@ -64,6 +67,7 @@ reset_file_if_only_index_changes() {
 
     # Switch back to the previous directory (i.e. the colmap git repository)
     cd $modified_colmap_source_dp
+    return $performed_git_restore
 }
 
 
@@ -74,6 +78,11 @@ create_patch() {
     if [ "$overwrite_patch_file" -eq 1 ] || [ ! -f "$patch_fp" ]; then
         git diff "$source_fp" > "$patch_fp"
         reset_file_if_only_index_changes $patch_fp
+        # Get return value of reset_file_if_only_index_changes
+        performed_git_restore=$?
+        if [ $performed_git_restore == 0 ]; then
+            echo "Running: git diff \"$source_fp\" > \"$patch_fp\""
+        fi
     fi
 }
 
