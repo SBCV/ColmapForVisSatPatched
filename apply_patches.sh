@@ -138,12 +138,13 @@ do
     echo "Set head to commit with hash $(git rev-parse HEAD)"
 
     apply_patches "${patches[@]}"
+    APPLY_RESULT=$?
 
     if [ $APPLY_MODE == "3way" ]; then
         git restore --staged .
     fi
 
-    if [ $? -ne 0 ]; then
+    if [ $APPLY_RESULT -ne 0 ]; then
         echo "apply_patches failed for commit: $COMMIT_SHA"
         echo "---------------------------------------------------------------------"
         echo "-------- Status --------"
