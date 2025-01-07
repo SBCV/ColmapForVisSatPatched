@@ -140,10 +140,6 @@ do
     apply_patches "${patches[@]}"
     APPLY_RESULT=$?
 
-    if [ $APPLY_MODE == "3way" ]; then
-        git restore --staged .
-    fi
-
     if [ $APPLY_RESULT -ne 0 ]; then
         echo "apply_patches failed for commit: $COMMIT_SHA"
         echo "---------------------------------------------------------------------"
@@ -152,5 +148,11 @@ do
         git status
         # Exit the loop
         break
+    else
+        echo "apply_patches succeeded for commit: $COMMIT_SHA"
+        echo "---------------------------------------------------------------------"
+        if [ $APPLY_MODE == "3way" ]; then
+            git restore --staged .
+        fi
     fi
 done
