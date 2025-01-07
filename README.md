@@ -1,4 +1,4 @@
-# Colmap For VisSat Patched
+# ColmapForVisSat Patches
 This repository uses ```git patch``` to implement [ColmapForVisSat](https://github.com/Kai-46/ColmapForVisSat). Since ```ColmapForVisSat``` is a full copy of [Colmap](https://github.com/colmap/colmap), it is difficult to maintain. By relying on ```git apply <patch>``` this repository offers a simpler approach to incorporate the latest changes of the original ```Colmap``` library.
 
 ## Compatibility
@@ -8,12 +8,12 @@ This repository uses ```git patch``` to implement [ColmapForVisSat](https://gith
 ## Apply a set of satellite specific patch files to the original Colmap repository
 Define two (temporary) variables storing the repository locations on disk:
 ```
-PathToColmapForVisSatPatched="path/to/ColmapForVisSatPatched"
+PathToColmapForVisSatPatches="path/to/ColmapForVisSatPatches"
 PathToColmapToBePatched="path/to/ColmapToBePatched"
 ```
 Clone the repositories:
 ```
-git clone https://github.com/SBCV/ColmapForVisSatPatched.git $PathToColmapForVisSatPatched
+git clone https://github.com/SBCV/ColmapForVisSatPatches.git $PathToColmapForVisSatPatches
 git clone https://github.com/colmap/colmap.git $PathToColmapToBePatched
 ```
 Checkout the Colmap version compatible to the current patch files with:
@@ -22,15 +22,15 @@ cd $PathToColmapToBePatched
 # Current patch files are created for d3c8d5d457569ff93804a61d1be45f18e5b43d27 (2023-02-18 08:39:04 +0000)
 git checkout d3c8d5d457569ff93804a61d1be45f18e5b43d27
 ```
-Ensure that `apply_patches.sh` has execute permissions (`ls -l $PathToColmapForVisSatPatched/apply_patches.sh`) - for example by running:
+Ensure that `apply_patches.sh` has execute permissions (`ls -l $PathToColmapForVisSatPatches/apply_patches.sh`) - for example by running:
 ```
-chmod +x $PathToColmapForVisSatPatched/apply_patches.sh
+chmod +x $PathToColmapForVisSatPatches/apply_patches.sh
 ```
 Finally, apply the satellite specific patches with:
 ```
-$PathToColmapForVisSatPatched/apply_patches.sh $PathToColmapToBePatched
+$PathToColmapForVisSatPatches/apply_patches.sh $PathToColmapToBePatched
 ```
-Note: Do NOT run `apply_patches.sh` with `sh $PathToColmapForVisSatPatched/apply_patches.sh` - this will not produce the required results! Do not worry about type warnings (e.g. ```warning: src/base/camera.cc has type 100644, expected 100755```).
+Note: Do NOT run `apply_patches.sh` with `sh $PathToColmapForVisSatPatches/apply_patches.sh` - this will not produce the required results! Do not worry about type warnings (e.g. ```warning: src/base/camera.cc has type 100644, expected 100755```).
 
 
 ## Build the patched Colmap repository
@@ -43,12 +43,12 @@ If you want to create patch files for a more recent Colmap version, you may want
 
 First define some (temporary) environment variables:
 ```
-PathToColmapForVisSatPatched="/path/to/ColmapForVisSatPatched"
+PathToColmapForVisSatPatches="/path/to/ColmapForVisSatPatches"
 PathToColmapLatest="path/to/ColmapLatest"
 ```
 Clone the repositories:
 ```
-git clone https://github.com/SBCV/ColmapForVisSatPatched.git $PathToColmapForVisSatPatched
+git clone https://github.com/SBCV/ColmapForVisSatPatches.git $PathToColmapForVisSatPatches
 git clone https://github.com/colmap/colmap.git $PathToColmapLatest
 cd $PathToColmapLatest
 ```
@@ -58,7 +58,7 @@ git checkout 31df46c6c82bbdcaddbca180bc220d2eab9a1b5e
 ```
 Try to apply the patches (this will probably not succeed, but it will show for which files the application of the corresponding patch failed).
 ```
-$PathToColmapForVisSatPatched/apply_patches.sh $PathToColmapLatest
+$PathToColmapForVisSatPatches/apply_patches.sh $PathToColmapLatest
 ```
 Example error:
 ```
@@ -66,13 +66,13 @@ error: patch failed: src/base/cost_functions.h:267
 error: src/base/cost_functions.h: patch does not apply
 ```
 
-Use Github or [PatchViewer](https://megatops.github.io/PatchViewer/) to view the corresponding patch file (e.g. [src__base__cost_functions.h.patch](https://github.com/SBCV/ColmapForVisSatPatched/blob/main/patches/src__base__cost_functions.h.patch)) - it will highlight the required changes. Copy the desired changes (i.e. the green parts) to corresponding place in the source code in `$PathToColmapLatest`! (e.g. [cost_functions.h](https://github.com/colmap/colmap/blob/dev/src/base/cost_functions.h))
+Use Github or [PatchViewer](https://megatops.github.io/PatchViewer/) to view the corresponding patch file (e.g. [src__base__cost_functions.h.patch](https://github.com/SBCV/ColmapForVisSatPatches/blob/main/patches/src__base__cost_functions.h.patch)) - it will highlight the required changes. Copy the desired changes (i.e. the green parts) to corresponding place in the source code in `$PathToColmapLatest`! (e.g. [cost_functions.h](https://github.com/colmap/colmap/blob/dev/src/base/cost_functions.h))
 
-Open `$PathToColmapForVisSatPatched/create_patches.sh` and comment out all lines `git diff ...` for which the application of the patch worked in the previous run.
+Open `$PathToColmapForVisSatPatches/create_patches.sh` and comment out all lines `git diff ...` for which the application of the patch worked in the previous run.
 
-Run the modified `create_patches.sh` script. It will create a new set of patches in `$PathToColmapForVisSatPatched/patches` overwriting previously outdated patches.
+Run the modified `create_patches.sh` script. It will create a new set of patches in `$PathToColmapForVisSatPatches/patches` overwriting previously outdated patches.
 ```
-$PathToColmapForVisSatPatched/create_patches.sh $PathToColmapLatest
+$PathToColmapForVisSatPatches/create_patches.sh $PathToColmapLatest
 ```
 
 ## Non-trivial conversion notes
