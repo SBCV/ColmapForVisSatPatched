@@ -6,6 +6,10 @@
 #   - the commit SHA-1 hash of the colmap version compatible to the patch files
 #   - the commit SHA-1 hash or "latest" of the colmap version we would like to update the patch files (optional)
 
+# TODO: Consider other tools such as:
+#   - patch: https://wiki.ubuntuusers.de/patch/
+#   - wiggle: https://manpages.ubuntu.com/manpages/focal/man1/wiggle.1.html
+
 if [ $# -lt 3 ] || [ $# -gt 4 ]; then
     echo "Script expects between 3 and 4 parameters, but ${#} provided!" >&2
     echo "Usage: $0 <mode> <path_to_colmap_source> <colmap_compatible_commit_hash> <colmap_target_commit_hash>"
