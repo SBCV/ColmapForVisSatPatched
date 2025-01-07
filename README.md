@@ -86,6 +86,9 @@ Run the modified `create_patches.sh` script. It will create a new set of patches
 $PathToColmapForVisSatPatches/create_patches.sh $PathToColmapLatest
 ```
 
+## For contributors/developers: Handle rejected hunks
+See [Apply Rejected Hunks](https://stackoverflow.com/questions/17879746/how-do-i-apply-rejected-hunks-after-fixing-them/26810251#26810251)
+
 ## For contributors/developers: Create a Colmap branch
 ```
 cd $PathToColmapLatest
