@@ -20,19 +20,26 @@ Clone the repositories:
 git clone https://github.com/SBCV/ColmapForVisSatPatches.git $PathToColmapForVisSatPatches
 git clone https://github.com/colmap/colmap.git $PathToColmapToBePatched
 ```
-Checkout the Colmap version compatible to the current patch files with:
-```
-cd $PathToColmapToBePatched
-# Current patch files are created for d3c8d5d457569ff93804a61d1be45f18e5b43d27 (2023-02-18 08:39:04 +0000)
-git checkout d3c8d5d457569ff93804a61d1be45f18e5b43d27
-```
-Ensure that `apply_patches.sh` has execute permissions (`ls -l $PathToColmapForVisSatPatches/apply_patches.sh`) - for example by running:
+Ensure that `apply_patches.sh` has execute permissions (`ls -l $PathToColmapForVisSatPatches/apply_patches.sh`). For example, by running:
 ```
 chmod +x $PathToColmapForVisSatPatches/apply_patches.sh
 ```
-Finally, apply the satellite specific patches with:
+
+Before you apply the patches, ensure that the Colmap repository is up-to-date and the `main` branch is active. (Note: the `apply_patches.sh` script will add new branches in the `Colmap` repository as needed).
 ```
-$PathToColmapForVisSatPatches/apply_patches.sh $PathToColmapToBePatched
+cd $PathToColmapToBePatched
+git reset --hard HEAD
+git switch main
+git pull
+```
+Finally, apply the satellite specific patches with the following command. Possible values for `<modes>` are `reject` and `3way`.
+```
+$PathToColmapForVisSatPatches/apply_patches.sh <mode> $PathToColmapToBePatched <colmap-commit-hash>
+```
+For instance:
+```
+# Current patch files are created for d3c8d5d457569ff93804a61d1be45f18e5b43d27 (2023-02-18 08:39:04 +0000)
+$PathToColmapForVisSatPatches/apply_patches.sh reject $PathToColmapToBePatched d3c8d5d457569ff93804a61d1be45f18e5b43d27
 ```
 Note: Do NOT run `apply_patches.sh` with `sh $PathToColmapForVisSatPatches/apply_patches.sh` - this will not produce the required results! Do not worry about type warnings (e.g. ```warning: src/base/camera.cc has type 100644, expected 100755```).
 
@@ -77,6 +84,12 @@ Open `$PathToColmapForVisSatPatches/create_patches.sh` and comment out all lines
 Run the modified `create_patches.sh` script. It will create a new set of patches in `$PathToColmapForVisSatPatches/patches` overwriting previously outdated patches.
 ```
 $PathToColmapForVisSatPatches/create_patches.sh $PathToColmapLatest
+```
+
+## For contributors/developers: Create a Colmap branch
+```
+cd $PathToColmapLatest
+git switch -c vissat_<patches-commit-hash>
 ```
 
 ## Non-trivial conversion notes
