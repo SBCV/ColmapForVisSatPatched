@@ -10,27 +10,47 @@
 #   - patch: https://wiki.ubuntuusers.de/patch/
 #   - wiggle: https://manpages.ubuntu.com/manpages/focal/man1/wiggle.1.html
 
-if [ $# -lt 3 ] || [ $# -gt 4 ]; then
+if [ $# -lt 4 ] || [ $# -gt 5 ]; then
     echo "Script expects between 3 and 4 parameters, but ${#} provided!" >&2
-    echo "Usage: $0 <mode> <path_to_colmap_source> <colmap_compatible_commit_hash> <colmap_target_commit_hash>"
+    echo "Usage: $0 <tool> <options> <path_to_colmap_source> <colmap_compatible_commit_hash> <colmap_target_commit_hash>"
     echo "Valid values for the <mode> parameter are reject and 3way".
     echo "The last parameter <colmap_target_hash> is optional. Can be set to HEAD."
     exit 2
 fi
 
-APPLY_MODE=$1
-COLMAP_TARGET_DP=$2
-COLMAP_COMPATIBLE_COMMIT_HASH=$3
-COLMAP_TARGET_COMMIT_HASH=${4:-$3}
+TOOL=$1
+OPTIONS=$2
+COLMAP_TARGET_DP=$3
+COLMAP_COMPATIBLE_COMMIT_HASH=$4
+COLMAP_TARGET_COMMIT_HASH=${5:-$4}
 
-case "$APPLY_MODE" in
-  reject|3way)
-    ;;
-  *)
-    echo "Invalid parameter: $APPLY_MODE. Allowed values are: reject and 3way"
+if [ $TOOL == "git_apply" ]; then
+    case "$OPTIONS" in
+    --reject|--3way|--stat|--check)
+        # Valid parameter, continue
+        ;;
+    *)
+        echo "Invalid parameter: $OPTIONS."
+        echo "Allowed values are: --reject, --3way, --stat and --check."
+        exit 1
+        ;;
+    esac
+elif [ $TOOL == "patch" ]; then
+    case "$OPTIONS" in
+    --reject|--merge)
+        # Valid parameter, continue
+        ;;
+    *)
+        echo "Invalid parameter: $OPTIONS."
+        echo "Allowed values are: --reject and --merge."
+        exit 1
+        ;;
+    esac
+else
+    echo "Invalid tool: $TOOL."
+    echo "Allowed values are: git_apply and patch."
     exit 1
-    ;;
-esac
+fi
 
 MAIN_BRANCH="main"
 VISSAT_BRANCH="vissat"
@@ -67,12 +87,27 @@ apply_patches() {
     #  "--3way"     this is similar to the "fuzz" option of "patch" and allows for a
     #               less strict matching of context lines.
     # Note: The "--reject" and "--3way" options can not be used together
-    OPTIONS="--$APPLY_MODE"
 
     # Loop through each patch file
     for patch in "$@";
     do
-        git apply $OPTIONS "$PATCH_DP/$patch"
+        if [ $TOOL == "git_apply" ]; then
+            git apply $OPTIONS "$PATCH_DP/$patch"
+        elif [ $TOOL == "patch" ]; then
+            # --reject-format=FORMAT  Create 'context' or 'unified' rejects.
+            if [ $OPTIONS == "--reject" ]; then
+                # Reject descibes the default behavior of patch, so ommit any parameter
+                patch -p1 -i "$PATCH_DP/$patch"
+            elif [ $OPTIONS == "--merge" ]; then
+                patch -p1 --merge -i "$PATCH_DP/$patch"
+            else
+                echo "SOMETHING WENT TERRIBLY WRONG"
+                exit 1
+            fi
+        else
+            echo "SOMETHING WENT TERRIBLY WRONG"
+            exit 1
+        fi
 
         # Check the exit status of git apply
         if [ $? -ne 0 ]; then
