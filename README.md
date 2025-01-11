@@ -87,7 +87,23 @@ $PathToColmapForVisSatPatches/create_patches.sh $PathToColmapLatest
 ```
 
 ## For contributors/developers: Handle rejected hunks
-See [Apply Rejected Hunks](https://stackoverflow.com/questions/17879746/how-do-i-apply-rejected-hunks-after-fixing-them/26810251#26810251)
+See [this link](https://stackoverflow.com/questions/17879746/how-do-i-apply-rejected-hunks-after-fixing-them/26810251#26810251) for more information to apply rejected hunks.
+
+#### Option 1
+
+Run the apply script with `git_apply --reject` to obtain a set of reject files with an overview of the conflicting hunks. 
+
+#### Option 2 (Recommended)
+
+Use the apply script with the `git_apply --3way` to write conflict markers into the affected files. For each conflicting hunk the script adds the code from the file to be patched between `<<<<<<< ours` and `=======`, and the code from the patch file between `=======` and `>>>>>>> theirs`. IMPORTANT: because 3-way merging uses a common base file for merging, the content between `=======` and `>>>>>>> theirs` MIGHT DIFFER from the actual hunk in the patch file (for example, this part might contain also context lines of the original hunk). With the conflict markers one can use the 3-way view of `VSCode` or `Meld` to merge the results. 
+
+##### Option 2a: `VSCode` (Recommended)
+
+In `VSCode` open the file with the conflict markers, and click on the bottom right on `Resolve in Merge Editor`. In the `Merge Editor` the top left pane (`incomming`) represents the content of the `patch` file and the top right (`current`) represents the file that should be patched (i.e. the current commit of the vanilla colmap repository). The bottom pane shows the current state of the merged result. Click on the toolbar of the bottom pane on `X Conflicts Remaining` to jump to the next conflict (relative to the current selected line). Important: non-matching hunk contexts ARE SHOWN AS SEPARATE conflicts. This is a huge advantage compared to the plain conflict markers and to the visualization in `meld`.
+
+##### Option 2b: `meld`
+
+In case of `meld`, start `meld`, click on `version control view` and navigate to the `colmap` repository and select the conflicting file. The `remote` file (left side) corresponds to the `patch` and the `base` file (right side) corresponds to changes of the file that should be patched.  
 
 ## For contributors/developers: Create a Colmap branch
 ```
