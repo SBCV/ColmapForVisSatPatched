@@ -38,8 +38,8 @@ $PathToColmapForVisSatPatches/apply_patches.sh <mode> $PathToColmapToBePatched <
 ```
 For instance:
 ```
-# Current patch files are created for d3c8d5d457569ff93804a61d1be45f18e5b43d27 (2023-02-18 08:39:04 +0000)
-$PathToColmapForVisSatPatches/apply_patches.sh reject $PathToColmapToBePatched d3c8d5d457569ff93804a61d1be45f18e5b43d27
+# Current patch files are created for 64916f856259d8386df96bc95e0eb28cd5fca86e (2023-03-01 20:54:52 +0000)
+$PathToColmapForVisSatPatches/apply_patches.sh reject $PathToColmapToBePatched 64916f856259d8386df96bc95e0eb28cd5fca86e
 ```
 Note: Do NOT run `apply_patches.sh` with `sh $PathToColmapForVisSatPatches/apply_patches.sh` - this will not produce the required results! Do not worry about type warnings (e.g. ```warning: src/base/camera.cc has type 100644, expected 100755```).
 
