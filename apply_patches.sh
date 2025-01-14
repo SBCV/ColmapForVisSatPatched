@@ -190,7 +190,7 @@ do
     else
         echo "apply_patches succeeded for commit: $COMMIT_SHA"
         echo "---------------------------------------------------------------------"
-        if [ $APPLY_MODE == "3way" ]; then
+        if [ $TOOL == "git_apply" ] && [ $OPTIONS == "--3way" ]; then
             git restore --staged .
         fi
     fi
