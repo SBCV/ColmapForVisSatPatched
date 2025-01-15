@@ -80,6 +80,13 @@ echo "Number commits from compatible to target commit: $COMMIT_LIST_LENGTH"
 #     echo $COMMIT_SHA
 # done
 
+get_patch_files_as_array() {
+    local patch_dir="$1"
+    patch_files_as_string=$(find "$patch_dir" -type f -name "*.patch")
+    mapfile -t patch_files_as_array <<< $patch_files_as_string
+    echo "${patch_files_as_array[@]}"
+}
+
 apply_patches() {
     # Options:
     #  "-v"         Verbose (useful for debugging, shows why applying patch failed)
@@ -88,18 +95,18 @@ apply_patches() {
     #               less strict matching of context lines.
     # Note: The "--reject" and "--3way" options can not be used together
 
-    # Loop through each patch file
-    for patch in "$@";
+    # Loop through each patch file in the the patch file array
+    for PATCH in "$@";
     do
         if [ $TOOL == "git_apply" ]; then
-            git apply $OPTIONS "$PATCH_DP/$patch"
+            git apply $OPTIONS $PATCH
         elif [ $TOOL == "patch" ]; then
             # --reject-format=FORMAT  Create 'context' or 'unified' rejects.
             if [ $OPTIONS == "--reject" ]; then
                 # Reject descibes the default behavior of patch, so ommit any parameter
-                patch -p1 -i "$PATCH_DP/$patch"
+                patch -p1 -i $PATCH
             elif [ $OPTIONS == "--merge" ]; then
-                patch -p1 --merge -i "$PATCH_DP/$patch"
+                patch -p1 --merge -i $PATCH
             else
                 echo "SOMETHING WENT TERRIBLY WRONG"
                 exit 1
@@ -112,7 +119,7 @@ apply_patches() {
         # Check the exit status of git apply
         if [ $? -ne 0 ]; then
             # Return 1 if patch fails
-            echo "Failed to apply patch: $patch"
+            echo "Failed to apply patch: $PATCH"
             return 1
         fi
     done
@@ -121,43 +128,10 @@ apply_patches() {
     return 0
 }
 
-patches=(
-    "src__base__camera.cc.patch"
-    "src__base__camera_models.h.patch"
-    "src__base__cost_functions.h.patch"
-    "src__base__database_cache.h.patch"
-    "src__base__reconstruction.cc.patch"
-    "src__base__reconstruction.h.patch"
-
-    "src__controllers__bundle_adjustment.cc.patch"
-    "src__ui__bundle_adjustment_widget.cc.patch"
-
-    "src__exe__colmap.cc.patch"
-    "src__exe__sfm.cc.patch"
-    "src__exe__sfm.h.patch"
-
-    "src__feature__sift.cc.patch"
-
-    "src__mvs__depth_map.cc.patch"
-    "src__mvs__depth_map.h.patch"
-    "src__mvs__fusion.cc.patch"
-    "src__mvs__fusion.h.patch"
-    "src__mvs__image.cc.patch"
-    "src__mvs__image.h.patch"
-    "src__mvs__model.cc.patch"
-    "src__mvs__model.h.patch"
-    "src__mvs__patch_match.cc.patch"
-    "src__mvs__patch_match.h.patch"
-    "src__mvs__patch_match_cuda.cu.patch"
-    "src__mvs__patch_match_cuda.h.patch"
-    "src__mvs__workspace.h.patch"
-
-    "src__optim__bundle_adjustment.cc.patch"
-    "src__optim__bundle_adjustment.h.patch"
-    "src__sfm__incremental_mapper.cc.patch"
-    "src__util__option_manager.cc.patch"
-)
-
+PATCH_FILES_AS_ARRAY=($(get_patch_files_as_array "$PATCH_DP"))
+# for PATCH_FILE in "${PATCH_FILES_AS_ARRAY[@]}"; do
+#     echo "$PATCH_FILE"
+# done
 
 for COMMIT_SHA in $COMMIT_LIST;
 do
@@ -176,7 +150,7 @@ do
     git switch --force --create $VISSAT_BRANCH $COMMIT_SHA
     echo "Set head to commit with hash $(git rev-parse HEAD)"
 
-    apply_patches "${patches[@]}"
+    apply_patches "${PATCH_FILES_AS_ARRAY[@]}"
     APPLY_RESULT=$?
 
     if [ $APPLY_RESULT -ne 0 ]; then
