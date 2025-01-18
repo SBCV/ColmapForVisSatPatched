@@ -1,7 +1,7 @@
-diff --git a/src/mvs/depth_map.h b/src/mvs/depth_map.h
-index fc5b0201..595accd7 100644
---- a/src/mvs/depth_map.h
-+++ b/src/mvs/depth_map.h
+diff --git a/src/colmap/mvs/depth_map.cc b/src/colmap/mvs/depth_map.cc
+index 3a52a9ef..2fa75b7f 100644
+--- a/src/colmap/mvs/depth_map.cc
++++ b/src/colmap/mvs/depth_map.cc
 @@ -1,3 +1,35 @@
 +// ===============================================================================================================
 +// Copyright (c) 2019, Cornell University. All rights reserved.
@@ -38,14 +38,25 @@ index fc5b0201..595accd7 100644
  // Copyright (c) 2023, ETH Zurich and UNC Chapel Hill.
  // All rights reserved.
  //
-@@ -59,8 +91,8 @@ class DepthMap : public Mat<float> {
-   Bitmap ToBitmap(const float min_percentile, const float max_percentile) const;
+@@ -37,13 +69,19 @@
+ namespace colmap {
+ namespace mvs {
  
-  private:
--  float depth_min_ = -1.0f;
--  float depth_max_ = -1.0f;
-+  float depth_min_ = -1e20f;
-+  float depth_max_ = -1e20f;
- };
+-DepthMap::DepthMap() : DepthMap(0, 0, -1.0f, -1.0f) {}
++DepthMap::DepthMap() : DepthMap(0, 0, -1e20f, -1e20f) {
++  // intialize to an absurd value
++//  Fill(-1e20f);
++}
  
- ////////////////////////////////////////////////////////////////////////////////
+ DepthMap::DepthMap(const size_t width, const size_t height,
+                    const float depth_min, const float depth_max)
+     : Mat<float>(width, height, 1),
+       depth_min_(depth_min),
+-      depth_max_(depth_max) {}
++      depth_max_(depth_max) {
++  // initialize to an absurd value
++  Fill(-1e20f);
++}
+ 
+ DepthMap::DepthMap(const Mat<float>& mat, const float depth_min,
+                    const float depth_max)

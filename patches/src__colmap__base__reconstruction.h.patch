@@ -1,7 +1,7 @@
-diff --git a/src/base/cost_functions.h b/src/base/cost_functions.h
-index e7d0a5d3..76358f37 100644
---- a/src/base/cost_functions.h
-+++ b/src/base/cost_functions.h
+diff --git a/src/colmap/base/reconstruction.h b/src/colmap/base/reconstruction.h
+index 69ca50f0..6da9abeb 100644
+--- a/src/colmap/base/reconstruction.h
++++ b/src/colmap/base/reconstruction.h
 @@ -1,3 +1,35 @@
 +// ===============================================================================================================
 +// Copyright (c) 2019, Cornell University. All rights reserved.
@@ -38,32 +38,23 @@ index e7d0a5d3..76358f37 100644
  // Copyright (c) 2023, ETH Zurich and UNC Chapel Hill.
  // All rights reserved.
  //
-@@ -298,4 +330,28 @@ inline void SetSphereManifold(ceres::Problem* problem, double* params) {
+@@ -178,7 +210,7 @@ class Reconstruction {
+   // given `extent`, whereas `p0` and `p1` determine the minimum and
+   // maximum percentiles of the camera centers considered.
+   void Normalize(const double extent = 10.0, const double p0 = 0.1,
+-                 const double p1 = 0.9, const bool use_images = true);
++                 const double p1 = 0.9, const bool use_images = true, Eigen::Vector3d* translation_applied=NULL, double *scale_applied=NULL);
  
- }  // namespace colmap
+   // Compute the centroid of the 3D points
+   Eigen::Vector3d ComputeCentroid(const double p0 = 0.1,
+@@ -269,6 +301,10 @@ class Reconstruction {
+   double ComputeMeanObservationsPerRegImage() const;
+   double ComputeMeanReprojectionError() const;
  
-+// cost function that put a soft constraint on the 3D points
-+// so that it does not deviate too much from the specified coordinates
-+class Point3DCostFunction {
-+ public:
-+  explicit Point3DCostFunction(const Eigen::Vector3d& point3D)
-+      : x_(point3D(0)), y_(point3D(1)), z_(point3D(2)) {}
-+  static ceres::CostFunction* Create(const Eigen::Vector3d& point3D) {
-+    return (new ceres::AutoDiffCostFunction<Point3DCostFunction, 3, 3>(
-+            new Point3DCostFunction(point3D)));
-+  }
-+  template <typename T>
-+  bool operator()(const T* const point3D, T* residuals) const {
-+    // deviation error
-+    residuals[0] = point3D[0] - T(x_);
-+    residuals[1] = point3D[1] - T(y_);
-+    residuals[2] = point3D[2] - T(z_);
-+    return true;
-+  }
-+ private:
-+  const double x_;
-+  const double y_;
-+  const double z_;
-+};
++  // @kai
++  // update reproj. error for each 3D point
++  void UpdateReprojErr();
 +
- #endif  // COLMAP_SRC_BASE_COST_FUNCTIONS_H_
+   // Read data from text or binary file. Prefer binary data if it exists.
+   void Read(const std::string& path);
+   void Write(const std::string& path) const;

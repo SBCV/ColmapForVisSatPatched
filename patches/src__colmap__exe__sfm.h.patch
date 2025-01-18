@@ -1,7 +1,7 @@
-diff --git a/src/exe/sfm.h b/src/exe/sfm.h
+diff --git a/src/colmap/exe/sfm.h b/src/colmap/exe/sfm.h
 index 56bb07c5..ab2af45a 100644
---- a/src/exe/sfm.h
-+++ b/src/exe/sfm.h
+--- a/src/colmap/exe/sfm.h
++++ b/src/colmap/exe/sfm.h
 @@ -46,6 +46,8 @@ int RunPointTriangulatorImpl(Reconstruction& reconstruction,
  
  int RunAutomaticReconstructor(int argc, char** argv);

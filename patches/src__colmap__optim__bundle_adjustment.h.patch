@@ -1,7 +1,7 @@
-diff --git a/src/optim/bundle_adjustment.h b/src/optim/bundle_adjustment.h
+diff --git a/src/colmap/optim/bundle_adjustment.h b/src/colmap/optim/bundle_adjustment.h
 index 37814490..53d6d099 100644
---- a/src/optim/bundle_adjustment.h
-+++ b/src/optim/bundle_adjustment.h
+--- a/src/colmap/optim/bundle_adjustment.h
++++ b/src/colmap/optim/bundle_adjustment.h
 @@ -1,3 +1,35 @@
 +// ===============================================================================================================
 +// Copyright (c) 2019, Cornell University. All rights reserved.
