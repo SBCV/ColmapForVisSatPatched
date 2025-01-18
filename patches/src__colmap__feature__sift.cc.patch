@@ -1,7 +1,7 @@
-diff --git a/src/util/option_manager.cc b/src/util/option_manager.cc
-index f620078a..dd0f8aeb 100644
---- a/src/util/option_manager.cc
-+++ b/src/util/option_manager.cc
+diff --git a/src/colmap/feature/sift.cc b/src/colmap/feature/sift.cc
+index 39a8d118..8acbb89b 100644
+--- a/src/colmap/feature/sift.cc
++++ b/src/colmap/feature/sift.cc
 @@ -1,3 +1,35 @@
 +// ===============================================================================================================
 +// Copyright (c) 2019, Cornell University. All rights reserved.
@@ -38,31 +38,26 @@ index f620078a..dd0f8aeb 100644
  // Copyright (c) 2023, ETH Zurich and UNC Chapel Hill.
  // All rights reserved.
  //
-@@ -469,6 +501,15 @@ void OptionManager::AddBundleAdjustmentOptions() {
-                               &bundle_adjustment->refine_extra_params);
-   AddAndRegisterDefaultOption("BundleAdjustment.refine_extrinsics",
-                               &bundle_adjustment->refine_extrinsics);
-+  // constrain points options
-+  AddAndRegisterDefaultOption("BundleAdjustment.constrain_points",
-+                              &bundle_adjustment->constrain_points);
-+  //  AddAndRegisterDefaultOption("BundleAdjustment.constrain_points_loss",
-+  //                              &bundle_adjustment->constrain_points_loss);
-+  AddAndRegisterDefaultOption("BundleAdjustment.constrain_points_loss_scale",
-+                              &bundle_adjustment->constrain_points_loss_scale);
-+  AddAndRegisterDefaultOption("BundleAdjustment.constrain_points_loss_weight",
-+                              &bundle_adjustment->constrain_points_loss_weight);
+@@ -368,14 +400,14 @@ void FindBestMatchesFLANN(
+ 
+ void WarnIfMaxNumMatchesReachedGPU(const SiftMatchGPU& sift_match_gpu,
+                                    const FeatureDescriptors& descriptors) {
+-  if (sift_match_gpu.GetMaxSift() < descriptors.rows()) {
+-    std::cout << StringPrintf(
+-                     "WARNING: Clamping features from %d to %d - consider "
+-                     "increasing the maximum number of matches.",
+-                     descriptors.rows(),
+-                     sift_match_gpu.GetMaxSift())
+-              << std::endl;
+-  }
++  // if (sift_match_gpu.GetMaxSift() < descriptors.rows()) {
++  //   std::cout << StringPrintf(
++  //                    "WARNING: Clamping features from %d to %d - consider "
++  //                    "increasing the maximum number of matches.",
++  //                    descriptors.rows(),
++  //                   sift_match_gpu.GetMaxSift())
++  //             << std::endl;
++  // }
  }
  
- void OptionManager::AddMapperOptions() {
-@@ -648,6 +689,11 @@ void OptionManager::AddPatchMatchStereoOptions() {
-                               &patch_match_stereo->allow_missing_files);
-   AddAndRegisterDefaultOption("PatchMatchStereo.write_consistency_graph",
-                               &patch_match_stereo->write_consistency_graph);
-+  // whether to overwrite existing reconstruction
-+  AddAndRegisterDefaultOption("PatchMatchStereo.overwrite",
-+                              &patch_match_stereo->overwrite);
-+  AddAndRegisterDefaultOption("PatchMatchStereo.use_exist_photom",
-+                              &patch_match_stereo->use_exist_photom);
- }
- 
- void OptionManager::AddStereoFusionOptions() {
+ void WarnDarknessAdaptivityNotAvailable() {

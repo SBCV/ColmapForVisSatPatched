@@ -1,7 +1,7 @@
-diff --git a/src/mvs/fusion.h b/src/mvs/fusion.h
+diff --git a/src/colmap/mvs/fusion.h b/src/colmap/mvs/fusion.h
 index ce978ae8..9a980f43 100644
---- a/src/mvs/fusion.h
-+++ b/src/mvs/fusion.h
+--- a/src/colmap/mvs/fusion.h
++++ b/src/colmap/mvs/fusion.h
 @@ -1,3 +1,35 @@
 +// ===============================================================================================================
 +// Copyright (c) 2019, Cornell University. All rights reserved.
