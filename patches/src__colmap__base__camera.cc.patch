@@ -1,5 +1,5 @@
 diff --git a/src/colmap/base/camera.cc b/src/colmap/base/camera.cc
-index 22c6901f..db33c8f7 100644
+index 5c6cea12..584b04b0 100644
 --- a/src/colmap/base/camera.cc
 +++ b/src/colmap/base/camera.cc
 @@ -1,3 +1,36 @@

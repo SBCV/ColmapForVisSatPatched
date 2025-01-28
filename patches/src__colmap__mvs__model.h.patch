@@ -1,5 +1,5 @@
 diff --git a/src/colmap/mvs/model.h b/src/colmap/mvs/model.h
-index 15761a94..8f6d9fc7 100644
+index f1ff691a..5c6df349 100644
 --- a/src/colmap/mvs/model.h
 +++ b/src/colmap/mvs/model.h
 @@ -50,9 +50,9 @@ namespace mvs {
