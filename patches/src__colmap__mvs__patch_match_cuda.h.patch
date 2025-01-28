@@ -1,5 +1,5 @@
 diff --git a/src/colmap/mvs/patch_match_cuda.h b/src/colmap/mvs/patch_match_cuda.h
-index 9e85e9b3..1ef27210 100644
+index ff8a30cc..b632ca52 100644
 --- a/src/colmap/mvs/patch_match_cuda.h
 +++ b/src/colmap/mvs/patch_match_cuda.h
 @@ -1,3 +1,35 @@
