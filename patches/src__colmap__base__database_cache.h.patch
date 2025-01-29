@@ -1,5 +1,5 @@
 diff --git a/src/colmap/base/database_cache.h b/src/colmap/base/database_cache.h
-index f5ff7a62..1a0876fb 100644
+index 11cfe202..69ed39ea 100644
 --- a/src/colmap/base/database_cache.h
 +++ b/src/colmap/base/database_cache.h
 @@ -1,3 +1,35 @@
@@ -38,7 +38,7 @@ index f5ff7a62..1a0876fb 100644
  // Copyright (c) 2023, ETH Zurich and UNC Chapel Hill.
  // All rights reserved.
  //
-@@ -43,7 +75,7 @@
+@@ -42,7 +74,7 @@
  #include <unordered_map>
  #include <unordered_set>
  #include <vector>
@@ -47,7 +47,7 @@ index f5ff7a62..1a0876fb 100644
  #include <Eigen/Core>
  
  namespace colmap {
-@@ -92,6 +124,57 @@ class DatabaseCache {
+@@ -91,6 +123,57 @@ class DatabaseCache {
              const bool ignore_watermarks,
              const std::unordered_set<std::string>& image_names);
  
