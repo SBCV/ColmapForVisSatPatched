@@ -20,6 +20,8 @@ Afterwards apply the patch files in the `patches folder` using the instructions 
 ## Build the patched Colmap repository
 - Run `sudo apt-get install libmetis-dev`
 - If anaconda/miniconda is installed, make sure to run `conda deactivate` before running `cmake`.
+- While building colmap you might want to set the `CUDA architecture` and/or the `Ceres` version.
+  - `cmake -DCMAKE_PREFIX_PATH=/usr/local -DCMAKE_BUILD_TYPE=Release -DCMAKE_CUDA_ARCHITECTURES=86 -GNinja ..`
 - Follow the [official install insctructions of Colmap for Linux](https://colmap.github.io/install.html#linux).
 
 ## For contributors/developers
