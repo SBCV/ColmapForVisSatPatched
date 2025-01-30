@@ -1,5 +1,5 @@
 diff --git a/src/colmap/feature/sift.cc b/src/colmap/feature/sift.cc
-index a631ea82..981690c5 100644
+index 7a1a8622..e546ad67 100644
 --- a/src/colmap/feature/sift.cc
 +++ b/src/colmap/feature/sift.cc
 @@ -1,3 +1,35 @@
