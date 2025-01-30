@@ -1,5 +1,5 @@
 diff --git a/src/colmap/sfm/incremental_mapper.cc b/src/colmap/sfm/incremental_mapper.cc
-index 4d11cfb9..4451eced 100644
+index 6f3cebde..e260a27c 100644
 --- a/src/colmap/sfm/incremental_mapper.cc
 +++ b/src/colmap/sfm/incremental_mapper.cc
 @@ -1,3 +1,35 @@

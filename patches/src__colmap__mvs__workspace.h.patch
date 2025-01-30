@@ -1,5 +1,5 @@
 diff --git a/src/colmap/mvs/workspace.h b/src/colmap/mvs/workspace.h
-index 773a0227..361be7b3 100644
+index 47dd9909..9b970f1c 100644
 --- a/src/colmap/mvs/workspace.h
 +++ b/src/colmap/mvs/workspace.h
 @@ -1,3 +1,35 @@
