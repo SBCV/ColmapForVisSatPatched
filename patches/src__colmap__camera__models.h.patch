@@ -1,5 +1,5 @@
 diff --git a/src/colmap/camera/models.h b/src/colmap/camera/models.h
-index c59ed357..ac2a5b52 100644
+index b4ec6df2..deeb14a3 100644
 --- a/src/colmap/camera/models.h
 +++ b/src/colmap/camera/models.h
 @@ -1,3 +1,35 @@
@@ -38,7 +38,7 @@ index c59ed357..ac2a5b52 100644
  // Copyright (c) 2023, ETH Zurich and UNC Chapel Hill.
  // All rights reserved.
  //
-@@ -124,7 +156,8 @@ static const int kInvalidCameraModelId = -1;
+@@ -123,7 +155,8 @@ static const int kInvalidCameraModelId = -1;
    CAMERA_MODEL_CASE(OpenCVFisheyeCameraModel)       \
    CAMERA_MODEL_CASE(FullOpenCVCameraModel)          \
    CAMERA_MODEL_CASE(FOVCameraModel)                 \
@@ -48,7 +48,7 @@ index c59ed357..ac2a5b52 100644
  #endif
  
  #ifndef CAMERA_MODEL_SWITCH_CASES
-@@ -348,6 +381,14 @@ struct ThinPrismFisheyeCameraModel
+@@ -346,6 +379,14 @@ struct ThinPrismFisheyeCameraModel
    CAMERA_MODEL_DEFINITIONS(10, "THIN_PRISM_FISHEYE", 12)
  };
  
@@ -62,40 +62,30 @@ index c59ed357..ac2a5b52 100644
 +
  // Check whether camera model with given name or identifier exists.
  bool ExistsCameraModelWithName(const std::string& model_name);
- bool ExistsCameraModelWithId(const int model_id);
-@@ -482,21 +523,18 @@ bool BaseCameraModel<CameraModel>::HasBogusParams(
+ bool ExistsCameraModelWithId(int model_id);
+@@ -477,13 +518,14 @@ bool BaseCameraModel<CameraModel>::HasBogusParams(
      const T min_focal_length_ratio,
      const T max_focal_length_ratio,
      const T max_extra_param) {
--  if (HasBogusPrincipalPoint(params, width, height)) {
--    return true;
--  }
-+  // if (HasBogusPrincipalPoint(params, width, height)) {
-+  //   return true;
-+  // }
- 
--  if (HasBogusFocalLength(params,
--                          width,
--                          height,
--                          min_focal_length_ratio,
--                          max_focal_length_ratio)) {
--    return true;
--  }
-+  // if (HasBogusFocalLength(params, width, height, min_focal_length_ratio,
-+  //                         max_focal_length_ratio)) {
-+  //   return true;
-+  // }
- 
--  if (HasBogusExtraParams(params, max_extra_param)) {
--    return true;
--  }
-+  // if (HasBogusExtraParams(params, max_extra_param)) {
-+  //   return true;
-+  // }
- 
-   return false;
+-  return HasBogusPrincipalPoint(params, width, height) ||
+-         HasBogusFocalLength(params,
+-                             width,
+-                             height,
+-                             min_focal_length_ratio,
+-                             max_focal_length_ratio) ||
+-         HasBogusExtraParams(params, max_extra_param);
++  // return HasBogusPrincipalPoint(params, width, height) ||
++  //        HasBogusFocalLength(params,
++  //                            width,
++  //                            height,
++  //                            min_focal_length_ratio,
++  //                            max_focal_length_ratio) ||
++  //        HasBogusExtraParams(params, max_extra_param);
++  return false;
  }
-@@ -1493,6 +1531,84 @@ void ThinPrismFisheyeCameraModel::Distortion(
+ 
+ template <typename CameraModel>
+@@ -1477,6 +1519,84 @@ void ThinPrismFisheyeCameraModel::Distortion(
    *dv = v * radial + T(2) * p2 * uv + p1 * (r2 + T(2) * v2) + sy1 * r2;
  }
  
