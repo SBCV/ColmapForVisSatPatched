@@ -1,5 +1,5 @@
 diff --git a/src/colmap/mvs/patch_match.cc b/src/colmap/mvs/patch_match.cc
-index 836bcb15..959bd0f5 100644
+index f99b8ced..8f0a80d2 100644
 --- a/src/colmap/mvs/patch_match.cc
 +++ b/src/colmap/mvs/patch_match.cc
 @@ -1,3 +1,35 @@
