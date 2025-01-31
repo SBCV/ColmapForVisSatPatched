@@ -1,5 +1,5 @@
 diff --git a/src/colmap/base/reconstruction.h b/src/colmap/base/reconstruction.h
-index 4d8503d7..e3d52319 100644
+index 05bc3e82..5956ed3c 100644
 --- a/src/colmap/base/reconstruction.h
 +++ b/src/colmap/base/reconstruction.h
 @@ -1,3 +1,35 @@
