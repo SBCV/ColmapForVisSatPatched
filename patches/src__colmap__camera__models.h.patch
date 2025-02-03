@@ -1,5 +1,5 @@
 diff --git a/src/colmap/camera/models.h b/src/colmap/camera/models.h
-index b4ec6df2..deeb14a3 100644
+index 411aec85..1a8f5f75 100644
 --- a/src/colmap/camera/models.h
 +++ b/src/colmap/camera/models.h
 @@ -1,3 +1,35 @@
@@ -63,7 +63,7 @@ index b4ec6df2..deeb14a3 100644
  // Check whether camera model with given name or identifier exists.
  bool ExistsCameraModelWithName(const std::string& model_name);
  bool ExistsCameraModelWithId(int model_id);
-@@ -477,13 +518,14 @@ bool BaseCameraModel<CameraModel>::HasBogusParams(
+@@ -478,13 +519,14 @@ bool BaseCameraModel<CameraModel>::HasBogusParams(
      const T min_focal_length_ratio,
      const T max_focal_length_ratio,
      const T max_extra_param) {
@@ -85,7 +85,7 @@ index b4ec6df2..deeb14a3 100644
  }
  
  template <typename CameraModel>
-@@ -1477,6 +1519,84 @@ void ThinPrismFisheyeCameraModel::Distortion(
+@@ -1478,6 +1520,84 @@ void ThinPrismFisheyeCameraModel::Distortion(
    *dv = v * radial + T(2) * p2 * uv + p1 * (r2 + T(2) * v2) + sy1 * r2;
  }
  
@@ -118,7 +118,7 @@ index b4ec6df2..deeb14a3 100644
 +}
 +
 +template <typename T>
-+void PerspectiveCameraModel::WorldToImage(const T* params, const T u, const T v,
++void PerspectiveCameraModel::CamToImg(const T* params, const T u, const T v,
 +                                         T* x, T* y) {
 +  const T f1 = params[0];
 +  const T f2 = params[1];
@@ -134,7 +134,7 @@ index b4ec6df2..deeb14a3 100644
 +}
 +
 +template <typename T>
-+void PerspectiveCameraModel::ImageToWorld(const T* params, const T x, const T y,
++void PerspectiveCameraModel::ImgToCam(const T* params, const T x, const T y,
 +                                     T* u, T* v) {
 +  const T f1 = params[0];
 +  const T f2 = params[1];
@@ -169,4 +169,4 @@ index b4ec6df2..deeb14a3 100644
 +
  ////////////////////////////////////////////////////////////////////////////////
  
- void CameraModelWorldToImage(const int model_id,
+ void CameraModelCamToImg(const int model_id,

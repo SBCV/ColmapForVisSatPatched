@@ -1,5 +1,5 @@
 diff --git a/src/colmap/mvs/model.cc b/src/colmap/mvs/model.cc
-index a2eb5160..15d1e51d 100644
+index a2eb5160..f4913fa6 100644
 --- a/src/colmap/mvs/model.cc
 +++ b/src/colmap/mvs/model.cc
 @@ -1,3 +1,35 @@
