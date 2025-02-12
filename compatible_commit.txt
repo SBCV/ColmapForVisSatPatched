@@ -1,2 +1,2 @@
-24796981d6ddfd7dcb3a4e5143688b4b52c428f9   (2023-08-01 07:23:52 +0000)
-Abstract feature matcher (#2082)
+22f7e9aa86727451179e8b75bbfb07aea9f40d25   (2023-10-22 21:01:06 +0200)
+Improve word spelling (#2235)
