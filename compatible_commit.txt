@@ -1,2 +1,2 @@
-c0355417328f3706a30a9265fd52bc7a5aa4cb8c   (2023-12-03 10:45:46 +0100)
-Camera becomes simple data struct (#2286)
+81e3fa8b67b2bbfe28e9225d8218d2e865563e25   (2024-02-01 06:53:57 +0100)
+Add costs for pose graph optimization (#2378)
