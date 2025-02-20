@@ -1,2 +1,2 @@
-a692b6813ce76c3bffc60db067435bc80c71488f   (2024-02-10 22:48:09 +0100)
-Adapt all the controllers to inherit from BaseController rather than Thread (except for feature extraction and matching) (#2406)
+6eb27c017c647cc903e0d404d33a97c6bf700678   (2024-02-20 08:45:59 +0100)
+Improve RunMapper when given an input reconstruction (#2431)
