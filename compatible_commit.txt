@@ -1,2 +1,2 @@
-74e21c4d703d53e0799ac419063364636c917e7c   (2024-02-06 16:50:56 +0100)
-Disentangle the controller from threading and integrate the new logic into IncrementalMapperController (#2392)
+a692b6813ce76c3bffc60db067435bc80c71488f   (2024-02-10 22:48:09 +0100)
+Adapt all the controllers to inherit from BaseController rather than Thread (except for feature extraction and matching) (#2406)
