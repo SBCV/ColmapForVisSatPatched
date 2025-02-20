@@ -1,5 +1,5 @@
 diff --git a/src/colmap/mvs/image.cc b/src/colmap/mvs/image.cc
-index a61c9d62..1e67c33a 100644
+index 40275f9a..4e002c45 100644
 --- a/src/colmap/mvs/image.cc
 +++ b/src/colmap/mvs/image.cc
 @@ -1,3 +1,35 @@
@@ -115,7 +115,7 @@ index a61c9d62..1e67c33a 100644
  
  void Image::SetBitmap(const Bitmap& bitmap) {
 @@ -60,6 +138,340 @@ void Image::SetBitmap(const Bitmap& bitmap) {
-   CHECK_EQ(height_, bitmap_.Height());
+   THROW_CHECK_EQ(height_, bitmap_.Height());
  }
  
 +void Image::SetK(const double K[9]) const {
