@@ -1,0 +1,13 @@
+diff --git a/src/colmap/controllers/incremental_mapper.h b/src/colmap/controllers/incremental_mapper.h
+index 0206d30b..f05e1710 100644
+--- a/src/colmap/controllers/incremental_mapper.h
++++ b/src/colmap/controllers/incremental_mapper.h
+@@ -165,6 +165,8 @@ class IncrementalMapperController : public BaseController {
+   void TriangulateReconstruction(
+       const std::shared_ptr<Reconstruction>& reconstruction);
+ 
++  std::string GetStatsString();
++
+  private:
+   bool LoadDatabase();
+   void Reconstruct(const IncrementalMapper::Options& init_mapper_options);

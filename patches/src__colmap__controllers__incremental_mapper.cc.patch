@@ -1,0 +1,15 @@
+diff --git a/src/colmap/controllers/incremental_mapper.cc b/src/colmap/controllers/incremental_mapper.cc
+index 8574898a..cbbfb1e2 100644
+--- a/src/colmap/controllers/incremental_mapper.cc
++++ b/src/colmap/controllers/incremental_mapper.cc
+@@ -221,6 +221,10 @@ void IncrementalMapperController::Run() {
+   run_timer.PrintMinutes();
+ }
+ 
++std::string IncrementalMapperController::GetStatsString() {
++  return database_cache_->GetStatsString();
++}
++
+ bool IncrementalMapperController::LoadDatabase() {
+   LOG(INFO) << "Loading database";
+ 
