@@ -1,5 +1,5 @@
 diff --git a/src/colmap/scene/reconstruction.cc b/src/colmap/scene/reconstruction.cc
-index 925d6aac..133a4001 100644
+index 9e524751..f640dd69 100644
 --- a/src/colmap/scene/reconstruction.cc
 +++ b/src/colmap/scene/reconstruction.cc
 @@ -1,3 +1,35 @@
@@ -38,7 +38,7 @@ index 925d6aac..133a4001 100644
  // Copyright (c) 2023, ETH Zurich and UNC Chapel Hill.
  // All rights reserved.
  //
-@@ -327,10 +359,19 @@ void Reconstruction::DeRegisterImage(const image_t image_id) {
+@@ -326,10 +358,19 @@ void Reconstruction::DeRegisterImage(const image_t image_id) {
        reg_image_ids_.end());
  }
  
@@ -59,7 +59,7 @@ index 925d6aac..133a4001 100644
    THROW_CHECK_GT(extent, 0);
  
    if ((use_images && reg_image_ids_.size() < 2) ||
-@@ -353,6 +394,20 @@ void Reconstruction::Normalize(const double extent,
+@@ -352,6 +393,20 @@ void Reconstruction::Normalize(const double extent,
    Sim3d tform(
        scale, Eigen::Quaterniond::Identity(), -scale * std::get<2>(bound));
    Transform(tform);
@@ -80,7 +80,7 @@ index 925d6aac..133a4001 100644
  }
  
  Eigen::Vector3d Reconstruction::ComputeCentroid(const double p0,
-@@ -677,14 +732,16 @@ void Reconstruction::UpdatePoint3DErrors() {
+@@ -676,14 +731,16 @@ void Reconstruction::UpdatePoint3DErrors() {
    }
  }
  
@@ -104,7 +104,7 @@ index 925d6aac..133a4001 100644
      ReadText(path);
    } else {
      LOG(FATAL_THROW) << "cameras, images, points3D files do not exist at "
-@@ -692,7 +749,9 @@ void Reconstruction::Read(const std::string& path) {
+@@ -691,7 +748,9 @@ void Reconstruction::Read(const std::string& path) {
    }
  }
  
@@ -115,7 +115,7 @@ index 925d6aac..133a4001 100644
  
  void Reconstruction::ReadText(const std::string& path) {
    cameras_.clear();
-@@ -983,6 +1042,32 @@ size_t Reconstruction::FilterPoints3DWithLargeReprojectionError(
+@@ -982,6 +1041,32 @@ size_t Reconstruction::FilterPoints3DWithLargeReprojectionError(
    return num_filtered;
  }
  
