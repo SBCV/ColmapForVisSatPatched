@@ -1,2 +1,2 @@
-0ea2d5ceee1360bba427b2ef61f1351e59a46f91   (2024-03-25 15:19:56 +0100)
-Bind substeps of incremental mapper with Python example (#2478)
+36acfe3becf55d2b311f537ec403c4e9a5cdd327   (2024-04-26 08:16:53 +0000)
+Make TwoViewGeometry writable in PyCOLMAP (#2540)
