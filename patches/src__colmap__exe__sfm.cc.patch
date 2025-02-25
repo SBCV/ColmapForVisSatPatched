@@ -38,7 +38,7 @@ index 33ae00ff..0e1f0f0c 100644
  // Copyright (c) 2023, ETH Zurich and UNC Chapel Hill.
  // All rights reserved.
  //
-@@ -42,6 +74,11 @@
+@@ -43,6 +75,11 @@
  #include <boost/property_tree/json_parser.hpp>
  #include <boost/property_tree/ptree.hpp>
  
@@ -50,7 +50,7 @@ index 33ae00ff..0e1f0f0c 100644
  namespace colmap {
  
  int RunAutomaticReconstructor(int argc, char** argv) {
-@@ -156,11 +193,69 @@ int RunBundleAdjuster(int argc, char** argv) {
+@@ -157,11 +194,69 @@ int RunBundleAdjuster(int argc, char** argv) {
    auto reconstruction = std::make_shared<Reconstruction>();
    reconstruction->Read(input_path);
  
@@ -120,7 +120,7 @@ index 33ae00ff..0e1f0f0c 100644
    return EXIT_SUCCESS;
  }
  
-@@ -450,8 +545,22 @@ void RunPointTriangulatorImpl(
+@@ -451,8 +546,22 @@ void RunPointTriangulatorImpl(
    auto reconstruction_manager = std::make_shared<ReconstructionManager>();
    IncrementalMapperController mapper(
        options_tmp, image_path, database_path, reconstruction_manager);
