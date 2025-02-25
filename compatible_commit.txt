@@ -1,2 +1,2 @@
-6fb02830b272a6a00caa132eebcd32f29e4bb11b   (2024-05-01 21:11:52 +0200)
-Customized python interface for bundle adjustment (#2509)
+022e42fa4cdb2c91252414bfbacd6260bb4f54ef   (2024-05-24 10:19:47 +0000)
+Split pair generation and matching (#2573)
