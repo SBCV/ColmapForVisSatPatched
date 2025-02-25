@@ -1,2 +1,2 @@
-36acfe3becf55d2b311f537ec403c4e9a5cdd327   (2024-04-26 08:16:53 +0000)
-Make TwoViewGeometry writable in PyCOLMAP (#2540)
+6fb02830b272a6a00caa132eebcd32f29e4bb11b   (2024-05-01 21:11:52 +0200)
+Customized python interface for bundle adjustment (#2509)
