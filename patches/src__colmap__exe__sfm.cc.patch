@@ -1,5 +1,5 @@
 diff --git a/src/colmap/exe/sfm.cc b/src/colmap/exe/sfm.cc
-index 33ae00ff..0e1f0f0c 100644
+index 646a6345..82185fe7 100644
 --- a/src/colmap/exe/sfm.cc
 +++ b/src/colmap/exe/sfm.cc
 @@ -1,3 +1,35 @@
@@ -120,9 +120,9 @@ index 33ae00ff..0e1f0f0c 100644
    return EXIT_SUCCESS;
  }
  
-@@ -451,8 +546,22 @@ void RunPointTriangulatorImpl(
+@@ -450,8 +545,22 @@ void RunPointTriangulatorImpl(
    auto reconstruction_manager = std::make_shared<ReconstructionManager>();
-   IncrementalMapperController mapper(
+   IncrementalPipeline mapper(
        options_tmp, image_path, database_path, reconstruction_manager);
 +
 +  // // @kai
