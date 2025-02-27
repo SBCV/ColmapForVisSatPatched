@@ -1,2 +1,2 @@
-eba888fe9a20fd1eb70cad0b7182e25f3246a7a2   (2024-09-15 18:04:01 +0000)
-minor renaming on pycolmap point2d and point3d impl. (#2784)
+969306d6be72f11f7f1f3c8cc7eafabedb668412   (2024-09-19 19:30:15 +0200)
+Add validity check for pixel coordinate in the Fisheye camera. Fix tests.  (#2790)
