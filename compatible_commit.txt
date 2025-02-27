@@ -1,2 +1,2 @@
-7090ef2f1846ade80ef754e777b1374a81622eb3   (2024-08-16 08:31:51 +0000)
-Rename IncrementalMapperOptions to IncrementalPipelineOptions (#2708)
+d2ee055251ab2c8be369693452624eb77a47abef   (2024-08-19 10:01:16 +0200)
+Add support for CUDA sparse BA solver (#2717)
