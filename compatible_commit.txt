@@ -1,2 +1,2 @@
-17f9e6644183d714f22966d776d292943b482769   (2024-09-25 10:36:56 +0000)
-Pose Prior based Incremental Mapper (#2660)
+62f8364265a277423055acc739f216fc9c43dcf5   (2024-09-30 16:03:21 +0200)
+Add test for PositionPriorErrorCostFunctor. (#2815)
