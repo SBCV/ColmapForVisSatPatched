@@ -1,2 +1,2 @@
-461cd981d10c1ca2c96b6a152342a5b565654f03   (2024-10-10 14:53:17 +0000)
-Disable -march=native flags in poselib (#2828)
+ff91388b16c2ac1e72a9613237fb0e1ee390770d   (2024-10-11 01:29:27 +0200)
+Make Image::cam_from_world_ optional (#2824)
