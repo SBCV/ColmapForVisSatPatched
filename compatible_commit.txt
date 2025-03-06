@@ -1,2 +1,2 @@
-107814a1b8ce60c49d0815938934be148d05b5b9   (2024-12-11 12:48:49 +0100)
-Add conversion between LLA and UTM coords. (#3030)
+09c22c3c3603dc981d80b6d816fcbdbc4fa9a81a   (2024-12-16 10:03:13 +0100)
+Reorder destructors for better safety in EndReconstruction (#3046)
