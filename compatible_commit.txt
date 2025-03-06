@@ -1,2 +1,2 @@
-d43f96adffdb0ff3462e3fe100ee59dcabca94bd   (2024-11-18 19:46:57 +0000)
-Custom macro for enum to string support (#2918)
+124e8387ba52ff59d2eeca37718c5025a6cd9fbc   (2024-12-09 08:22:37 +0100)
+Use Azure blob storage as vcpkg binary cache (#2999)
