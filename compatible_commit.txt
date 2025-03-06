@@ -1,2 +1,2 @@
-fc69be73e7349a1fb0ef0fe7cbf7dd464a3127cb   (2024-10-28 09:32:14 +0000)
-Use analytical Jacobian in IterativeUndistortion. Add trust region (#2857)
+01ca00aff8a4b39bc5e1f7b549e4fe426b5276e5   (2024-11-16 23:45:51 +0000)
+Fix conversion from CUDA texture references to objects in SIFT feature extraction (#2911)

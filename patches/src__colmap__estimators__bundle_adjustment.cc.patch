@@ -1,5 +1,5 @@
 diff --git a/src/colmap/estimators/bundle_adjustment.cc b/src/colmap/estimators/bundle_adjustment.cc
-index 5be6ab44..e512bb15 100644
+index feb75f8a..bd7b2d60 100644
 --- a/src/colmap/estimators/bundle_adjustment.cc
 +++ b/src/colmap/estimators/bundle_adjustment.cc
 @@ -1,3 +1,35 @@
@@ -126,7 +126,7 @@ index 5be6ab44..e512bb15 100644
    ParameterizeCameras(reconstruction);
    ParameterizePoints(reconstruction);
  }
-@@ -542,6 +618,16 @@ void BundleAdjuster::AddPointToProblem(const point3D_t point3D_id,
+@@ -543,6 +619,16 @@ void BundleAdjuster::AddPointToProblem(const point3D_t point3D_id,
    }
  }
  
