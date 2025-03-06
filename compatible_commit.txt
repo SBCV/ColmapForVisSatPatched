@@ -1,2 +1,2 @@
-01ca00aff8a4b39bc5e1f7b549e4fe426b5276e5   (2024-11-16 23:45:51 +0000)
-Fix conversion from CUDA texture references to objects in SIFT feature extraction (#2911)
+d065cea09317b2c1cbb9fad66376464119a3ee07   (2024-11-17 15:57:25 +0100)
+Modernized bundle adjustment interface (#2896)
