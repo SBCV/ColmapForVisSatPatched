@@ -1,2 +1,2 @@
-648856db85ee513cfd93ab3460ace7d071590528   (2024-10-26 09:47:47 +0000)
-Various improvements for pycolmap bindings (#2854)
+fc69be73e7349a1fb0ef0fe7cbf7dd464a3127cb   (2024-10-28 09:32:14 +0000)
+Use analytical Jacobian in IterativeUndistortion. Add trust region (#2857)

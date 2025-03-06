@@ -1,5 +1,5 @@
 diff --git a/src/colmap/sensor/models.h b/src/colmap/sensor/models.h
-index ef18a526..c9bd31c0 100644
+index c8401916..716a70fd 100644
 --- a/src/colmap/sensor/models.h
 +++ b/src/colmap/sensor/models.h
 @@ -1,3 +1,35 @@
@@ -46,7 +46,7 @@ index ef18a526..c9bd31c0 100644
  };
  
  #ifndef CAMERA_MODEL_DEFINITIONS
-@@ -146,7 +179,8 @@ enum class CameraModelId {
+@@ -150,7 +183,8 @@ enum class CameraModelId {
    CAMERA_MODEL_CASE(FullOpenCVCameraModel)          \
    CAMERA_MODEL_CASE(FOVCameraModel)                 \
    CAMERA_MODEL_CASE(ThinPrismFisheyeCameraModel)    \
@@ -56,7 +56,7 @@ index ef18a526..c9bd31c0 100644
  #endif
  
  #ifndef CAMERA_MODEL_SWITCH_CASES
-@@ -448,6 +482,15 @@ struct RadTanThinPrismFisheyeModel
+@@ -453,6 +487,15 @@ struct RadTanThinPrismFisheyeModel
    FISHEYE_CAMERA_MODEL_DEFINITIONS
  };
  
@@ -72,7 +72,7 @@ index ef18a526..c9bd31c0 100644
  // Check whether camera model with given name or identifier exists.
  bool ExistsCameraModelWithName(const std::string& model_name);
  bool ExistsCameraModelWithId(CameraModelId model_id);
-@@ -583,13 +626,14 @@ bool BaseCameraModel<CameraModel>::HasBogusParams(
+@@ -588,13 +631,14 @@ bool BaseCameraModel<CameraModel>::HasBogusParams(
      const T min_focal_length_ratio,
      const T max_focal_length_ratio,
      const T max_extra_param) {
@@ -94,7 +94,7 @@ index ef18a526..c9bd31c0 100644
  }
  
  template <typename CameraModel>
-@@ -1755,6 +1799,80 @@ void RadTanThinPrismFisheyeModel::Distortion(
+@@ -1757,6 +1801,79 @@ void RadTanThinPrismFisheyeModel::Distortion(
    *dv = y_distorted - v;
  }
  
@@ -137,14 +137,13 @@ index ef18a526..c9bd31c0 100644
 +  *y = f2 * v / w + c2;
 +}
 +
-+template <typename T>
 +void PerspectiveCameraModel::CamFromImg(
-+  const T* params, const T x, const T y, T* u, T* v, T* w) {
-+  const T f1 = params[0];
-+  const T f2 = params[1];
-+  const T c1 = params[2];
-+  const T c2 = params[3];
-+  const T s = params[4];  // skew parameter
++  const double* params, double x, double y, double* u, double* v, double* w) {
++  const double f1 = params[0];
++  const double f2 = params[1];
++  const double c1 = params[2];
++  const double c2 = params[3];
++  const double s = params[4];  // skew parameter
 +
 +  // Lift points to normalized plane
 +  *v = (y - c2) / f2;           // v must be calculated first, because u depends on v
