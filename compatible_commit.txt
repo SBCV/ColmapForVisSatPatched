@@ -1,2 +1,2 @@
-124e8387ba52ff59d2eeca37718c5025a6cd9fbc   (2024-12-09 08:22:37 +0100)
-Use Azure blob storage as vcpkg binary cache (#2999)
+107814a1b8ce60c49d0815938934be148d05b5b9   (2024-12-11 12:48:49 +0100)
+Add conversion between LLA and UTM coords. (#3030)
